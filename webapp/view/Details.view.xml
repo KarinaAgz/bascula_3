@@ -1,0 +1,79 @@
+<mvc:XMLView 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:form="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    controllerName="delmex.bascula3.controller.Details">
+    <Page 
+        title="{i18n>title}" 
+        showNavButton="true" 
+        navButtonPress="goBackBtn">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Title 
+                    text="Detalle del Folio: {basculaDetails>/Folio}" 
+                    level="H2" 
+                    class="sapUiMediumMarginBottom"/>
+                <form:SimpleForm 
+                    editable="false" 
+                    layout="ResponsiveGridLayout" 
+                    labelSpanXL="4" 
+                    labelSpanL="4" 
+                    labelSpanM="4" 
+                    labelSpanS="12" 
+                    adjustLabelSpan="false" 
+                    columnsXL="2" 
+                    columnsL="2" 
+                    columnsM="1">
+                    <form:content>
+                        <core:Title text="Información General"/>
+                        <Label text="Tipo ticket"/>
+                        <Text text="{basculaDetails>/Tipoticket}"/>
+                        <Label text="Centro entrada"/>
+                        <Text text="{basculaDetails>/CentroEnt}"/>
+                        <Label text="Centro salida"/>
+                        <Text text="{basculaDetails>/CentroSal}"/>
+                        <Label text="Material"/>
+                        <Text text="{basculaDetails>/Material}"/>
+                        <Label text="Conductor"/>
+                        <Text text="{basculaDetails>/Conductor}"/>
+
+                        <core:Title text="Datos de Pesaje"/>
+                        <Label text="Báscula Entrada"/>
+                        <Text text="{basculaDetails>/BasculaEnt}"/>
+                        <Label text="Báscula Salida"/>
+                        <Text text="{basculaDetails>/BasculaSal}"/>
+                        <Label text="Pesaje"/>
+                        <Text text="{basculaDetails>/Pesaje}"/>
+                        <Label text="Pesaje 2"/>
+                        <Text text="{basculaDetails>/Pesaje2}"/>
+                        <Label text="Peso Neto"/>
+                        <Text text="{basculaDetails>/PesoNeto}"/>
+                        <Label text="Peso Teórico"/>
+                        <Text text="{basculaDetails>/PesoTeorico}"/>
+                        <Label text="Diferencia"/>
+                        <Text text="{basculaDetails>/Diferencia}"/>
+
+                        <core:Title text="Fechas y Proceso"/>
+                        <Label text="Fecha Registro Báscula"/>
+                        <Text text="{basculaDetails>/FechaRegBas}"/>
+                        <Label text="Fecha Salida Báscula"/>
+                        <Text text="{basculaDetails>/FechaSalBas}"/>
+                        <Label text="Proceso"/>
+                        <Text text="{basculaDetails>/Proceso}"/>
+                        <Label text="Número Documento"/>
+                        <Text text="{basculaDetails>/NumeroDoc}"/>
+
+                        <core:Title text="Resultados"/>
+                        <Label text="Valor"/>
+                        <Text text="{basculaDetails>/Valor}"/>
+                        <Label text="Registro Incompleto"/>
+                        <Text text="{basculaDetails>/RegIncompleto}"/>
+                        <Label text="Mensaje"/>
+                        <Text text="{basculaDetails>/Mensaje}"/>
+                    </form:content>
+                </form:SimpleForm>
+            </VBox>
+        </content>
+    </Page>
+</mvc:XMLView>
