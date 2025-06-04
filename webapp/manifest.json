@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZBASC_SRV/",
+        "uri": "/sap/opu/odata/sap/ZUI_BASCULA_SRV_V2/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -64,9 +64,13 @@
         }
       },
       "zbasc": {
+        "type": "sap.ui.model.odata.v2.ODataModel",
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "useBatch": false
+        }
       }
     },
     "resources": {
@@ -110,9 +114,8 @@
           "name": "Main"
         },
         "TargetDetails": {
-       "id": "Details",
-        "name": "Details"
-
+          "id": "Details",
+          "name": "Details"
         }
       }
     },

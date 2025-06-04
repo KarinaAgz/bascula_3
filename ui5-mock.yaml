@@ -17,8 +17,8 @@ server:
           url: https://ui5.sap.com
         backend:
           - path: /sap
-            url: https://my64786668.payroll.hr.cloud.sap
-            destination: PAYROLL
+            url: https://my413406-api.s4hana.cloud.sap
+            destination: Bascula_v2
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

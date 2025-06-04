@@ -4,23 +4,27 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar"
-    height="100%">
+    height="100%"
+>
     <f:DynamicPage
         id="dynamicPage"
-        headerExpanded="true">
+        headerExpanded="true"
+    >
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
                     <HBox
                         width="100%"
                         justifyContent="Center"
-                        alignItems="Center">
+                        alignItems="Center"
+                    >
                         <Title
                             text="{i18n>title}"
                             level="H1"
                             textAlign="Center"
                             wrapping="true"
-                            class="sapUiTinyMargin sapThemeHighlight-asColor"/>
+                            class="sapUiTinyMargin sapThemeHighlight-asColor"
+                        />
                     </HBox>
                 </f:heading>
                 <f:actions>
@@ -29,14 +33,16 @@
                         icon="sap-icon://pin"
                         tooltip="{i18n>toggleFilters}"
                         press="onToggleFilters"
-                        type="Transparent"/>
+                        type="Transparent"
+                    />
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
             <f:DynamicPageHeader
                 id="filterHeader"
-                visible="true">
+                visible="true"
+            >
                 <f:content>
                     <fb:FilterBar
                         id="filterBar"
@@ -44,21 +50,42 @@
                         search="onSearch"
                         reset="onReset"
                         showFilterConfiguration="true"
-                        filterContainerWidth="17rem">
+                        filterContainerWidth="17rem"
+                    >
                         <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                id="MainView_filterGroupItem_0"
+                                name="Folio"
+                                label="{i18n>folio}"
+                                groupName="visibleItems"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <Input
+                                        id="filterFolio"
+                                        placeholder="{i18n>buscarPorFolio}"
+                                        width="400px"
+                                        class="sapUiSmallMarginEnd"
+                                        liveChange="onFilterLiveChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
                             <fb:FilterGroupItem
                                 id="MainView_FilterGroupItem_01"
                                 name="CentroEnt"
                                 label="{i18n>centroEnt}"
                                 groupName="visibleItems"
-                                visibleInFilterBar="true">
+                                visibleInFilterBar="true"
+                            >
                                 <fb:control>
                                     <Input
                                         id="filterCentroEnt"
                                         placeholder="{i18n>buscaPorCentro}"
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange="onFilterLiveChange"/>
+                                        liveChange="onFilterLiveChange"
+                                    />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -66,14 +93,16 @@
                                 name="Ticket"
                                 label="{i18n>ticket}"
                                 groupName="visibleItems"
-                                visibleInFilterBar="true">
+                                visibleInFilterBar="true"
+                            >
                                 <fb:control>
                                     <Input
                                         id="filterTicket"
                                         placeholder="{i18n>buscaPorTicket}"
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange="onFilterLiveChange"/>
+                                        liveChange="onFilterLiveChange"
+                                    />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -81,29 +110,105 @@
                                 name="CentroSal"
                                 label="{i18n>centroSal}"
                                 groupName="visibleItems"
-                                visibleInFilterBar="true">
+                                visibleInFilterBar="true"
+                            >
                                 <fb:control>
                                     <Input
                                         id="filterCentroSal"
                                         placeholder="{i18n>buscaPorCentroSal}"
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange="onFilterLiveChange"/>
+                                        liveChange="onFilterLiveChange"
+                                    />
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
                                 id="MainView_FilterGroupItem_04"
                                 name="Material"
-                                label="{i18n>materia}"
+                                label="{i18n>material}"
                                 groupName="visibleItems"
-                                visibleInFilterBar="true">
+                                visibleInFilterBar="true"
+                            >
                                 <fb:control>
                                     <Input
-                                        id="filterMateria"
-                                        placeholder="{i18n>buscaPorMateria}"
+                                        id="filterMaterial"
+                                        placeholder="{i18n>buscaPorMaterial}"
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange="onFilterLiveChange"/>
+                                        liveChange="onFilterLiveChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="MainView_FilterGroupItem_05"
+                                name="Numero Documento"
+                                label="{i18n>numDoc}"
+                                groupName="visibleItems"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <Input
+                                        id="filterdoc"
+                                        placeholder="{i18n>buscaPorDoc}"
+                                        width="400px"
+                                        class="sapUiSmallMarginEnd"
+                                        liveChange="onFilterLiveChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="MainView_FilterGroupItem_06"
+                                name="Placa"
+                                label="{i18n>placa}"
+                                groupName="visisbleItems"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <Input
+                                        id="filterPlaca"
+                                        placeholder="{i18n>buscaPorPlaca}"
+                                        width="400px"
+                                        class="sapUiSmallMarginEnd"
+                                        liveChange="onFilterLiveChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="MainView_FilterGroupItem_07"
+                                name="FechaEntrada"
+                                label="{i18n>fechaEntrada}"
+                                groupName="visibleItems"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <DatePicker
+                                        id="filterFechaEntrada"
+                                        placeholder="{18n>seleccionaFechaEntrada}"
+                                        width="400px"
+                                        class="sapUiSmallMarginEnd"
+                                        change="onFilterLinveChange"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="MainView_FilterGroupItem_08"
+                                name="FechaSalida"
+                                label="{i18n>fechaSalida}"
+                                groupName="visibleItems"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <DatePicker
+                                        id="filterFechaSalida"
+                                        placeholder="{i18n>seleccionaFechaSalida}"
+                                        width="400px"
+                                        class="sapUiSmallMarginEnd"
+                                        change="onFilterLiveChange"
+                                    />
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -114,43 +219,88 @@
         <f:content>
             <VBox
                 width="100%"
-                class="sapUiMediumMargin">
+                class="sapUiMediumMargin"
+            >
                 <Title
                     text="{i18n>tableTitle}"
                     level="H2"
-                    class="sapUiTinyMarginBottom"/>
+                    class="sapUiTinyMarginBottom"
+                />
                 <Table
                     id="itemsTable"
-                    items="{zbasc>/Z_ALTA_Set}"
-                    growing="true"
+                    items="{
+                        path: 'zbasc>/Folio',
+                        parameters: {
+                            countMode: 'None'
+                        }
+                    }"
                     growingThreshold="20"
                     mode="SingleSelectMaster"
-                    selectionChange="onRowSelectionChange">
+                    selectionChange="onRowSelectionChange"
+                >
                     <columns>
                         <Column>
-                            <Text text="{i18n>folio}"/>
+                            <Text text="{i18n>folio}" />
                         </Column>
                         <Column>
-                            <Text text="{i18n>ticket}"/>
+                            <Text text="{i18n>tipoTicket}" />
                         </Column>
                         <Column>
-                            <Text text="{i18n>centroEnt}"/>
+                            <Text text="{i18n>centroEnt}" />
                         </Column>
                         <Column>
-                            <Text text="{i18n>centroSal}"/>
+                            <Text text="{i18n>centroSal}" />
                         </Column>
                         <Column>
-                            <Text text="{i18n>materia}"/>
+                            <Text text="{i18n>material}" />
+                        </Column>
+
+                        <Column >
+                            <Text text="{i18n>proceso}"></Text>
+                        </Column>
+
+                        <Column >
+                            <Text text="{i18n>numeroDoc}"></Text>
+                        </Column>
+
+                        <Column >
+                            <Text text="{i18n>placa}"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="{i18n>fechaEntrada}"/>
+                        </Column>
+
+                        <Column >
+                            <Text text="{i18n>fechaSalida}"/>
                         </Column>
                     </columns>
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Text text="{zbasc>Folio}"/>
-                                <Text text="{zbasc>Tipoticket}"/>
-                                <Text text="{zbasc>CentroEnt}"/>
-                                <Text text="{zbasc>CentroSal}"/>
-                                <Text text="{zbasc>Material}"/>
+                                <Text text="{zbasc>Folio}" />
+                                <Text text="{zbasc>Tipoticket}" />
+                                <Text text="{zbasc>CentroEnt}" />
+                                <Text text="{zbasc>CentroSal}" />
+                                <Text text="{zbasc>Material}" />
+                                <Text text="{zbasc>Proceso}" />
+                                <Text text="{zbasc>NumeroDoc}" />
+                                <Text text="{zbasc>Placa}" />
+                                
+                                <Text text="{
+                                    parts: [{path: 'zbasc>FechaEntBas'}],
+                                    formatter: '.formatDateTime'
+                                }" />
+                                <!-- Entrada Bascula (Fecha y Hora juntas) -->
+                                <Text text="{
+                                    path: 'zbasc>FechaEntBas',
+                                    formatter: '.formatDateTime'
+                                }" />
+                                <!-- Salida Bascula (Fecha y Hora juntas) -->
+                                <Text text="{
+                                    path: 'zbasc>FechaSalBas',
+                                    formatter: '.formatDateTime'
+                                }" />
                             </cells>
                         </ColumnListItem>
                     </items>

@@ -31,8 +31,8 @@ server:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
           - path: /sap
-            url: https://my64786668.payroll.hr.cloud.sap
-            destination: PAYROLL
+            url: https://my413406-api.s4hana.cloud.sap
+            destination: Bascula_v2
     - name: sap-fe-mockserver
       beforeMiddleware: csp
       configuration:

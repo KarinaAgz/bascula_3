@@ -49,11 +49,12 @@ sap.ui.define([
                 var sValue = oControl.getValue();
 
                 if (sValue) {
+                    var sValueUpper=sValue.toUpperCase();
                     aFilters.push(new Filter({
                         path: sName,
                         operator: FilterOperator.Contains,
                         value1: sValue,
-                        caseSensitive: false
+                        caseSensitive: true
                     }));
                 }
             });
@@ -85,6 +86,34 @@ sap.ui.define([
                     folio: sFolio
                 });
             }
+        },
+        // Formatter para combinar fecha y hora en formato DD/MM/YYYY HH:MM:SS
+        formatDateTime: function (sDateTime) {
+            if (!sDateTime) return "";
+
+            // Extraer componentes de la fecha y hora
+            var sYear = sDateTime.substring(0, 4);
+            var sMonth = sDateTime.substring(4, 6);
+            var sDay = sDateTime.substring(6, 8);
+            var sHour = sDateTime.substring(9, 11);
+            var sMinute = sDateTime.substring(11, 13);
+            var sSecond = sDateTime.substring(13, 15);
+
+            // Crear objeto Date para validación
+            var oDate = new Date(sYear, sMonth - 1, sDay, sHour, sMinute, sSecond);
+
+            // Formatear la fecha como DD/MM/YYYY
+            var sFormattedDate = ("0" + oDate.getDate()).slice(-2) + "/" +
+                                 ("0" + (oDate.getMonth() + 1)).slice(-2) + "/" +
+                                 oDate.getFullYear();
+
+            // Formatear la hora como HH:MM:SS
+            var sFormattedTime = ("0" + oDate.getHours()).slice(-2) + ":" +
+                                 ("0" + oDate.getMinutes()).slice(-2) + ":" +
+                                 ("0" + oDate.getSeconds()).slice(-2);
+
+            // Combinar fecha y hora
+            return sFormattedDate + " " + sFormattedTime;
         }
     });
 });
