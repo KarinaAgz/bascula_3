@@ -45,9 +45,9 @@
                         <Text text="{ path: 'zbasc>/BasculaEnt', formatter: '.defaultText' }"/>
                         <Label text="Báscula Salida"/>
                         <Text text="{ path: 'zbasc>/BasculaSal', formatter: '.defaultText' }"/>
-                        <Label text="Pesaje"/>
+                        <Label text="Pesaje 1 en kg"/>
                         <Text text="{ path: 'zbasc>/Pesaje', formatter: '.defaultText' }"/>
-                        <Label text="Pesaje 2"/>
+                        <Label text="Pesaje 2 en kg"/>
                         <Text text="{ path: 'zbasc>/Pesaje2', formatter: '.defaultText' }"/>
                         <Label text="Peso Neto"/>
                         <Text text="{ path: 'zbasc>/PesoNeto', formatter: '.defaultText' }"/>
@@ -69,8 +69,7 @@
                         <core:Title text="Resultados"/>
                         <Label text="Valor"/>
                         <Text text="{ path: 'zbasc>/Valor', formatter: '.defaultText' }"/>
-                        <Label text="Registro Incompleto"/>
-                        <Text text="{ path: 'zbasc>/RegIncompleto', formatter: '.defaultText' }"/>
+                        
                         <Label text="Mensaje"/>
                         <Text text="{ path: 'zbasc>/Mensaje', formatter: '.defaultText' }"/>
                     </form:content>

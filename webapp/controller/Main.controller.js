@@ -2,14 +2,57 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageToast"
-], function (Controller, Filter, FilterOperator, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel"
+], function (Controller, Filter, FilterOperator, MessageToast, JSONModel) {
     "use strict";
 
     return Controller.extend("delmex.bascula3.controller.Main", {
         onInit: function () {
-            var oTable = this.byId("itemsTable");
-            oTable.attachEvent("dataReceived", this.onDataReceived, this);
+            var oView = this.getView();
+            var oModel = this.getOwnerComponent().getModel("zbasc");
+
+            if (!oModel) {
+                MessageToast.show("El modelo zbasc no está definido.");
+                return;
+            }
+
+            // Cargar datos de CTTicket usando el modelo zbasc
+            oModel.read("/CTTicket", {
+                success: function (oData) {
+                    var oTicketData = {};
+                    oData.results.forEach(function (oEntry) {
+                        oTicketData[oEntry.TipoTicket] = oEntry.Descripcion;
+                    });
+                    oView.setModel(new JSONModel(oTicketData), "ticketModel");
+                    console.log("Datos de CTTicket cargados:", oTicketData);
+                }.bind(this),
+                error: function (oError) {
+                    oView.setBusy(false);
+                    MessageToast.show("Error al cargar los tipos de ticket.");
+                    console.error("Error al cargar CTTicket:", oError);
+                }
+            });
+        },
+
+        onRowSelectionChange: function (oEvent) {
+            var oTable = oEvent.getSource();
+            var oSelectedItem = oTable.getSelectedItem();
+            if (oSelectedItem) {
+                var oContext = oSelectedItem.getBindingContext("zbasc");
+                var sFolio = oContext.getProperty("Folio");
+                console.log("Folio seleccionado:", sFolio);
+                this.getOwnerComponent().getRouter().navTo("RouteDetails", {
+                    folio: sFolio
+                });
+            }
+        },
+
+        formatTicketDescription: function (sTicketCode) {
+            var oTicketModel = this.getView().getModel("ticketModel");
+            if (!oTicketModel || !sTicketCode) return "No disponible";
+            var sDescription = oTicketModel.getProperty("/" + sTicketCode) || "No disponible";
+            return sDescription;
         },
 
         onToggleFilters: function () {
@@ -27,11 +70,10 @@ sap.ui.define([
         onReset: function () {
             var oFilterBar = this.byId("filterBar");
             oFilterBar.getFilterGroupItems().forEach(function (oItem) {
-                var oControl=oItem.getControl();
-                if(oControl instanceof sap.m.Input){
+                var oControl = oItem.getControl();
+                if (oControl instanceof sap.m.Input) {
                     oControl.setValue("");
-
-                }else if(oControl instanceof sap.m.DatePicker){
+                } else if (oControl instanceof sap.m.DatePicker) {
                     oControl.setDateValue(null);
                 }
             });
@@ -39,7 +81,11 @@ sap.ui.define([
         },
 
         onFilterLiveChange: function (oEvent) {
+            // Filtrar inmediatamente al escribir
             this._applyFilters();
+            // Disparar manualmente el evento de búsqueda del FilterBar para asegurar la actualización
+            var oFilterBar = this.byId("filterBar");
+            oFilterBar.fireSearch();
         },
 
         _applyFilters: function () {
@@ -48,46 +94,59 @@ sap.ui.define([
             var aFilters = [];
             var oFilterBar = this.byId("filterBar");
             var aFilterGroupItems = oFilterBar.getFilterGroupItems();
+            var oTicketModel = this.getView().getModel("ticketModel");
 
             aFilterGroupItems.forEach(function (oFilterItem) {
                 var sName = oFilterItem.getName();
                 var oControl = oFilterItem.getControl();
-                var sValue ;
-                
-                // maneja dif tipos de controles
+                var sValue;
 
-                    if(oControl instanceof sap.m.Input){
-                        sValue=oControl.getValue();
-                        
-                        if (sValue) {
-                            var sValueUpper=sValue.toUpperCase();
-                            console.log("Filtrando", sName, "con valor:", sValueUpper);
+                if (oControl instanceof sap.m.Input) {
+                    sValue = oControl.getValue();
+                    if (sValue) {
+                        var sValueUpper = sValue.toUpperCase();
+                        console.log("Filtrando", sName, "con valor:", sValueUpper);
+
+                        if (sName === "Ticket") {
+                            // Mapear la descripción ("Interno" o "Externo") a los códigos numéricos ("1" o "2")
+                            var sTicketCode = Object.keys(oTicketModel.getData()).find(function (key) {
+                                return oTicketModel.getProperty("/" + key).toUpperCase() === sValueUpper;
+                            });
+                            if (sTicketCode) {
+                                aFilters.push(new Filter({
+                                    path: "Tipoticket",
+                                    operator: FilterOperator.EQ,
+                                    value1: sTicketCode
+                                }));
+                            } else {
+                                console.log("Descripción de ticket no encontrada:", sValueUpper);
+                            }
+                        } else {
                             aFilters.push(new Filter({
                                 path: sName,
                                 operator: FilterOperator.Contains,
                                 value1: sValueUpper,
                                 caseSensitive: true
                             }));
-                }
-            }else if(oControl instanceof sap.m.DatePicker){
-                var oDate=oControl.getDateValue();
-                if(oDate && oDate instanceof Date && !isNaN(oDate)){
-                    //formaattear la fecha al formato esperado (YYYYMMDD)
-                    var sYear=oDate.getFullYear().toString();
-                    var sMonth=("0" + (oDate.getMonth()+1)).slice(-2)
-                    var sDay= ("0" + oDate.getDate()).slice(-2);
-                    var sFormattedDate=sYear + sMonth + sDay 
+                        }
+                    }
+                } else if (oControl instanceof sap.m.DatePicker) {
+                    var oDate = oControl.getDateValue();
+                    if (oDate && oDate instanceof Date && !isNaN(oDate)) {
+                        var sYear = oDate.getFullYear().toString();
+                        var sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                        var sDay = ("0" + oDate.getDate()).slice(-2);
+                        var sFormattedDate = sYear + sMonth + sDay;
 
-                    //usar filterOpertaor .contains para buscar fecha exacta
-                    aFilters.push(new Filter({
-                        path: sName,
-                        operator:FilterOperator.Contains,
-                        value1:sFormattedDate 
-                    }));
-                }else{
-                    console.log("Fecha invalida para",sName,":0",oDate);
+                        aFilters.push(new Filter({
+                            path: sName,
+                            operator: FilterOperator.Contains,
+                            value1: sFormattedDate
+                        }));
+                    } else {
+                        console.log("Fecha inválida para", sName, ":", oDate);
+                    }
                 }
-            }
             });
 
             oBinding.filter(aFilters);
@@ -107,23 +166,9 @@ sap.ui.define([
             }
         },
 
-        onRowSelectionChange: function (oEvent) {
-            var oTable = oEvent.getSource();
-            var oSelectedItem = oTable.getSelectedItem();
-            if (oSelectedItem) {
-                var oContext = oSelectedItem.getBindingContext("zbasc");
-                var sFolio = oContext.getProperty("Folio");
-
-                this.getOwnerComponent().getRouter().navTo("RouteDetails", {
-                    folio: sFolio
-                });
-            }
-        },
-        // Formatter para combinar fecha y hora en formato DD/MM/YYYY HH:MM:SS
         formatDateTime: function (sDateTime) {
             if (!sDateTime) return "";
 
-            // Extraer componentes de la fecha y hora
             var sYear = sDateTime.substring(0, 4);
             var sMonth = sDateTime.substring(4, 6);
             var sDay = sDateTime.substring(6, 8);
@@ -131,20 +176,16 @@ sap.ui.define([
             var sMinute = sDateTime.substring(11, 13);
             var sSecond = sDateTime.substring(13, 15);
 
-            // Crear objeto Date para validación
             var oDate = new Date(sYear, sMonth - 1, sDay, sHour, sMinute, sSecond);
 
-            // Formatear la fecha como DD/MM/YYYY
             var sFormattedDate = ("0" + oDate.getDate()).slice(-2) + "/" +
                                  ("0" + (oDate.getMonth() + 1)).slice(-2) + "/" +
                                  oDate.getFullYear();
 
-            // Formatear la hora como HH:MM:SS
             var sFormattedTime = ("0" + oDate.getHours()).slice(-2) + ":" +
                                  ("0" + oDate.getMinutes()).slice(-2) + ":" +
                                  ("0" + oDate.getSeconds()).slice(-2);
 
-            // Combinar fecha y hora
             return sFormattedDate + " " + sFormattedTime;
         }
     });

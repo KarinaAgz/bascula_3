@@ -51,6 +51,7 @@
                         reset="onReset"
                         showFilterConfiguration="true"
                         filterContainerWidth="17rem"
+                        
                     >
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem
@@ -258,24 +259,19 @@
                         <Column>
                             <Text text="{i18n>material}" />
                         </Column>
-
-                        <Column >
+                        <Column>
                             <Text text="{i18n>proceso}"></Text>
                         </Column>
-
-                        <Column >
+                        <Column>
                             <Text text="{i18n>numeroDoc}"></Text>
                         </Column>
-
-                        <Column >
+                        <Column>
                             <Text text="{i18n>placa}"/>
                         </Column>
-
-                        <Column >
+                        <Column>
                             <Text text="{i18n>fechaEntrada}"/>
                         </Column>
-
-                        <Column >
+                        <Column>
                             <Text text="{i18n>fechaSalida}"/>
                         </Column>
                     </columns>
@@ -283,25 +279,15 @@
                         <ColumnListItem>
                             <cells>
                                 <Text text="{zbasc>Folio}" />
-                                <Text text="{zbasc>Tipoticket}" />
+                                <Text text="{ path: 'zbasc>Tipoticket', formatter: '.formatTicketDescription' }" />
                                 <Text text="{zbasc>CentroEnt}" />
                                 <Text text="{zbasc>CentroSal}" />
                                 <Text text="{zbasc>Material}" />
                                 <Text text="{zbasc>Proceso}" />
                                 <Text text="{zbasc>NumeroDoc}" />
                                 <Text text="{zbasc>Placa}" />
-                                
-                                
-                                <!-- Entrada Bascula (Fecha y Hora juntas) -->
-                                <Text text="{
-                                    path: 'zbasc>FechaEntBas',
-                                    formatter: '.formatDateTime'
-                                }" />
-                                <!-- Salida Bascula (Fecha y Hora juntas) -->
-                                <Text text="{
-                                    path: 'zbasc>FechaSalBas',
-                                    formatter: '.formatDateTime'
-                                }" />
+                                <Text text="{ path: 'zbasc>FechaEntBas', formatter: '.formatDateTime' }" />
+                                <Text text="{ path: 'zbasc>FechaSalBas', formatter: '.formatDateTime' }" />
                             </cells>
                         </ColumnListItem>
                     </items>
