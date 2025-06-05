@@ -142,7 +142,7 @@
 
                             <fb:FilterGroupItem
                                 id="MainView_FilterGroupItem_05"
-                                name="Numero Documento"
+                                name="NumeroDoc"
                                 label="{i18n>numDoc}"
                                 groupName="visibleItems"
                                 visibleInFilterBar="true"
@@ -162,7 +162,7 @@
                                 id="MainView_FilterGroupItem_06"
                                 name="Placa"
                                 label="{i18n>placa}"
-                                groupName="visisbleItems"
+                                groupName="visibleItems"
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
@@ -178,7 +178,7 @@
 
                             <fb:FilterGroupItem
                                 id="MainView_FilterGroupItem_07"
-                                name="FechaEntrada"
+                                name="FechaEntBas"
                                 label="{i18n>fechaEntrada}"
                                 groupName="visibleItems"
                                 visibleInFilterBar="true"
@@ -186,17 +186,19 @@
                                 <fb:control>
                                     <DatePicker
                                         id="filterFechaEntrada"
-                                        placeholder="{18n>seleccionaFechaEntrada}"
+                                        placeholder="{i18n>seleccionaFechaEntrada}"
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
-                                        change="onFilterLinveChange"
+                                        change="onFilterLiveChange"
+                                        displayFormat="dd/MM/yyyy"
+                                        valueFormat="yyyyMMdd"
                                     />
                                 </fb:control>
                             </fb:FilterGroupItem>
 
                             <fb:FilterGroupItem
                                 id="MainView_FilterGroupItem_08"
-                                name="FechaSalida"
+                                name="FechaSalBas"
                                 label="{i18n>fechaSalida}"
                                 groupName="visibleItems"
                                 visibleInFilterBar="true"
@@ -208,6 +210,8 @@
                                         width="400px"
                                         class="sapUiSmallMarginEnd"
                                         change="onFilterLiveChange"
+                                        displayFormat="dd/MM/yyyy"
+                                        valueFormat="yyyyMMdd"
                                     />
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -287,10 +291,7 @@
                                 <Text text="{zbasc>NumeroDoc}" />
                                 <Text text="{zbasc>Placa}" />
                                 
-                                <Text text="{
-                                    parts: [{path: 'zbasc>FechaEntBas'}],
-                                    formatter: '.formatDateTime'
-                                }" />
+                                
                                 <!-- Entrada Bascula (Fecha y Hora juntas) -->
                                 <Text text="{
                                     path: 'zbasc>FechaEntBas',

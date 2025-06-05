@@ -26,8 +26,14 @@ sap.ui.define([
 
         onReset: function () {
             var oFilterBar = this.byId("filterBar");
-            oFilterBar.getFilterGroupItems().forEach(function (oFilterItem) {
-                oFilterItem.getControl().setValue("");
+            oFilterBar.getFilterGroupItems().forEach(function (oItem) {
+                var oControl=oItem.getControl();
+                if(oControl instanceof sap.m.Input){
+                    oControl.setValue("");
+
+                }else if(oControl instanceof sap.m.DatePicker){
+                    oControl.setDateValue(null);
+                }
             });
             this._applyFilters();
         },
@@ -46,20 +52,46 @@ sap.ui.define([
             aFilterGroupItems.forEach(function (oFilterItem) {
                 var sName = oFilterItem.getName();
                 var oControl = oFilterItem.getControl();
-                var sValue = oControl.getValue();
+                var sValue ;
+                
+                // maneja dif tipos de controles
 
-                if (sValue) {
-                    var sValueUpper=sValue.toUpperCase();
+                    if(oControl instanceof sap.m.Input){
+                        sValue=oControl.getValue();
+                        
+                        if (sValue) {
+                            var sValueUpper=sValue.toUpperCase();
+                            console.log("Filtrando", sName, "con valor:", sValueUpper);
+                            aFilters.push(new Filter({
+                                path: sName,
+                                operator: FilterOperator.Contains,
+                                value1: sValueUpper,
+                                caseSensitive: true
+                            }));
+                }
+            }else if(oControl instanceof sap.m.DatePicker){
+                var oDate=oControl.getDateValue();
+                if(oDate && oDate instanceof Date && !isNaN(oDate)){
+                    //formaattear la fecha al formato esperado (YYYYMMDD)
+                    var sYear=oDate.getFullYear().toString();
+                    var sMonth=("0" + (oDate.getMonth()+1)).slice(-2)
+                    var sDay= ("0" + oDate.getDate()).slice(-2);
+                    var sFormattedDate=sYear + sMonth + sDay 
+
+                    //usar filterOpertaor .contains para buscar fecha exacta
                     aFilters.push(new Filter({
                         path: sName,
-                        operator: FilterOperator.Contains,
-                        value1: sValue,
-                        caseSensitive: true
+                        operator:FilterOperator.Contains,
+                        value1:sFormattedDate 
                     }));
+                }else{
+                    console.log("Fecha invalida para",sName,":0",oDate);
                 }
+            }
             });
 
             oBinding.filter(aFilters);
+            console.log("Filtros aplicados:", aFilters);
         },
 
         onDataReceived: function (oEvent) {

@@ -11,7 +11,7 @@
         <content>
             <VBox class="sapUiSmallMargin">
                 <Title 
-                    text="Detalle del Folio: {basculaDetails>/Folio}" 
+                    text="Detalle del Folio: {zbasc>/Folio}" 
                     level="H2" 
                     class="sapUiMediumMarginBottom"/>
                 <form:SimpleForm 
@@ -28,49 +28,51 @@
                     <form:content>
                         <core:Title text="Información General"/>
                         <Label text="Tipo ticket"/>
-                        <Text text="{basculaDetails>/Tipoticket}"/>
+                        <Text text="{ path: 'zbasc>/Tipoticket', formatter: '.defaultText' }"/>
                         <Label text="Centro entrada"/>
-                        <Text text="{basculaDetails>/CentroEnt}"/>
+                        <Text text="{ path: 'zbasc>/CentroEnt', formatter: '.defaultText' }"/>
                         <Label text="Centro salida"/>
-                        <Text text="{basculaDetails>/CentroSal}"/>
+                        <Text text="{ path: 'zbasc>/CentroSal', formatter: '.defaultText' }"/>
                         <Label text="Material"/>
-                        <Text text="{basculaDetails>/Material}"/>
+                        <Text text="{ path: 'zbasc>/Material', formatter: '.defaultText' }"/>
                         <Label text="Conductor"/>
-                        <Text text="{basculaDetails>/Conductor}"/>
+                        <Text text="{ path: 'zbasc>/Conductor', formatter: '.defaultText' }"/>
+                        <Label text="Placa"/>
+                        <Text text="{ path: 'zbasc>/Placa', formatter: '.defaultText' }"/>
 
                         <core:Title text="Datos de Pesaje"/>
                         <Label text="Báscula Entrada"/>
-                        <Text text="{basculaDetails>/BasculaEnt}"/>
+                        <Text text="{ path: 'zbasc>/BasculaEnt', formatter: '.defaultText' }"/>
                         <Label text="Báscula Salida"/>
-                        <Text text="{basculaDetails>/BasculaSal}"/>
+                        <Text text="{ path: 'zbasc>/BasculaSal', formatter: '.defaultText' }"/>
                         <Label text="Pesaje"/>
-                        <Text text="{basculaDetails>/Pesaje}"/>
+                        <Text text="{ path: 'zbasc>/Pesaje', formatter: '.defaultText' }"/>
                         <Label text="Pesaje 2"/>
-                        <Text text="{basculaDetails>/Pesaje2}"/>
+                        <Text text="{ path: 'zbasc>/Pesaje2', formatter: '.defaultText' }"/>
                         <Label text="Peso Neto"/>
-                        <Text text="{basculaDetails>/PesoNeto}"/>
+                        <Text text="{ path: 'zbasc>/PesoNeto', formatter: '.defaultText' }"/>
                         <Label text="Peso Teórico"/>
-                        <Text text="{basculaDetails>/PesoTeorico}"/>
+                        <Text text="{ path: 'zbasc>/PesoTeorico', formatter: '.defaultText' }"/>
                         <Label text="Diferencia"/>
-                        <Text text="{basculaDetails>/Diferencia}"/>
+                        <Text text="{ path: 'zbasc>/Diferencia', formatter: '.defaultText' }"/>
 
                         <core:Title text="Fechas y Proceso"/>
-                        <Label text="Fecha Registro Báscula"/>
-                        <Text text="{basculaDetails>/FechaRegBas}"/>
+                        <Label text="Fecha Entrada Báscula"/>
+                        <Text text="{ path: 'zbasc>/FechaEntBas', formatter: '.formatDateTime' }"/>
                         <Label text="Fecha Salida Báscula"/>
-                        <Text text="{basculaDetails>/FechaSalBas}"/>
+                        <Text text="{ path: 'zbasc>/FechaSalBas', formatter: '.formatDateTime' }"/>
                         <Label text="Proceso"/>
-                        <Text text="{basculaDetails>/Proceso}"/>
+                        <Text text="{ path: 'zbasc>/Proceso', formatter: '.defaultText' }"/>
                         <Label text="Número Documento"/>
-                        <Text text="{basculaDetails>/NumeroDoc}"/>
+                        <Text text="{ path: 'zbasc>/NumeroDoc', formatter: '.defaultText' }"/>
 
                         <core:Title text="Resultados"/>
                         <Label text="Valor"/>
-                        <Text text="{basculaDetails>/Valor}"/>
+                        <Text text="{ path: 'zbasc>/Valor', formatter: '.defaultText' }"/>
                         <Label text="Registro Incompleto"/>
-                        <Text text="{basculaDetails>/RegIncompleto}"/>
+                        <Text text="{ path: 'zbasc>/RegIncompleto', formatter: '.defaultText' }"/>
                         <Label text="Mensaje"/>
-                        <Text text="{basculaDetails>/Mensaje}"/>
+                        <Text text="{ path: 'zbasc>/Mensaje', formatter: '.defaultText' }"/>
                     </form:content>
                 </form:SimpleForm>
             </VBox>
