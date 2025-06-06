@@ -1,1 +1,79 @@
 /* Enter your custom styles here */
+.customPage .sapMPageHeader .sapMTitle {
+    color: #06023f !important; /* Color rojo elegante (puedes cambiarlo, ej. #3498db para azul) */
+    font-size: x-large;
+    font-weight: bold; /* Texto en negrita */
+}
+/* Fondo general de la página */
+.page {
+    background-color:#f1f4f9; /* Fondo gris claro */
+}
+
+.color{
+    background-color:  #06023f;
+}
+
+/* Contenedor principal */
+.VBox {
+    background-color: #ffffff; /* Fondo blanco para el contenido */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 1.5rem; /* Espaciado interno */
+    margin: 1rem; /* Margen externo */
+}
+
+/* Título principal */
+.pageTitle {
+    color: #2c3e50; /* Color azul oscuro */
+    font-weight: bold;
+    margin-bottom: 1.5rem !important; /* Espacio debajo del título */
+    text-align: center; /* Centrado */
+}
+
+/* Formulario */
+.Form {
+    background-color: #f1f4f9; /* Fondo gris muy claro */
+    border: 1px solid #e0e0e0; /* Borde sutil */
+    border-radius: 6px; /* Bordes redondeados */
+    padding: 1rem; /* Espaciado interno */
+}
+
+/* Títulos de las secciones */
+.SectionTitle {
+    color: #34495e; /* Azul oscuro más claro */
+    font-weight: 600; /* Negrita */
+    margin-top: 1rem !important; /* Espacio superior */
+}
+
+/* Contenedor del botón */
+.buttonContainer {
+    margin-top: 2rem; /* Espacio superior para separar del formulario */
+}
+
+/* Estilo del botón */
+.button {
+    background-color: #3498db !important; /* Azul elegante */
+    color: #ffffff !important; /* Texto blanco */
+    border-radius: 20px !important; /* Bordes redondeados */
+    padding: 0.5rem 1.5rem !important; /* Espaciado interno */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important; /* Sombra */
+    transition: background-color 0.3s ease !important; /* Transición suave */
+}
+
+.elegantButton:hover {
+    background-color: #2980b9 !important; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Ajustes para la impresión */
+@media print {
+    .elegantButton {
+        display: none; /* Oculta el botón al imprimir */
+    }
+    .elegantPage {
+        background-color: #ffffff; /* Fondo blanco para impresión */
+    }
+    .elegantVBox {
+        box-shadow: none; /* Sin sombra en impresión */
+        margin: 0; /* Sin margen en impresión */
+    }
+}

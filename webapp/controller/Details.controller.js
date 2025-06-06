@@ -18,7 +18,7 @@ sap.ui.define([
                 MessageToast.show("Folio no proporcionado.");
                 return;
             }
-            console.log("Folio recibido:", sFolio); // Depuración
+            
             this._loadDetails(sFolio);
         },
 
@@ -43,7 +43,7 @@ sap.ui.define([
                     var oDetailsModel = new JSONModel(oData);
                     oView.setModel(oDetailsModel, "zbasc");
                     oView.setBusy(false);
-                    MessageToast.show("Detalles cargados para el Folio: " + sFolio);
+                   console.log("Detalles cargados para el Folio: " + sFolio);
                 }.bind(this),
                 error: function (oError) {
                     oView.setBusy(false);
@@ -76,6 +76,68 @@ sap.ui.define([
                 console.error("Error al formatear fecha:", sDateTime, e);
                 return sDateTime;
             }
+        },
+        
+         
+        onDownloadPDF: function () {
+            // Verifica si hay datos
+            var oModel = this.getView().getModel("zbasc");
+            if (!oModel || !oModel.getData()) {
+                MessageToast.show("No hay datos para descargar.");
+                return;
+            }
+
+            // Activa la impresión del navegador
+            window.print();
+            MessageToast.show("Selecciona 'Guardar como PDF' en la ventana de impresión.");
+        },
+        onUpdateNumeroDoc: function () {
+            var oView = this.getView();
+            var oInput = oView.byId("numeroDocInput");
+            var sNewNumeroDoc = oInput.getValue().trim(); // Valor ingresado por el usuario
+
+            var oModel = this.getOwnerComponent().getModel("zbasc");
+            var oRouter = this.getOwnerComponent().getRouter();
+            var sFolio = oRouter.getHashChanger().getHash().split("/")[1]; // Obtener el Folio de la URL
+
+            if (!sFolio) {
+                MessageToast.show("No se pudo obtener el Folio.");
+                return;
+            }
+
+            var sPath = "/Folio('" + sFolio + "')";
+            var oData = {};
+
+            // Si el usuario ingresó un valor, lo enviamos; si no, no incluimos el campo en el PATCH
+            if (sNewNumeroDoc) {
+                oData.NumeroDoc = sNewNumeroDoc;
+            }
+
+            // Si no hay datos para actualizar, mostramos un mensaje y no hacemos la petición
+            if (Object.keys(oData).length === 0) {
+                MessageToast.show("No se ingresó un nuevo número de documento. No se realizará ninguna actualización.");
+                return;
+            }
+
+            oView.setBusy(true);
+            $.ajax({
+                url: oModel.sServiceUrl + sPath,
+                type: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify(oData),
+                success: function (data, status, xhr) {
+                    oView.setBusy(false);
+                    MessageToast.show("Número de documento actualizado exitosamente.");
+                    // Actualizar el modelo local para reflejar el cambio
+                    var oDetailsModel = oView.getModel("detail");
+                    oDetailsModel.setProperty("/NumeroDoc", sNewNumeroDoc);
+                },
+                error: function (xhr, status, error) {
+                    oView.setBusy(false);
+                    MessageToast.show("Error al actualizar el número de documento: " + error);
+                    console.error("Error en AJAX:", xhr.responseText);
+                }
+            });
         }
     });
 });

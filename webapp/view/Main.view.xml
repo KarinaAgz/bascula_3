@@ -9,14 +9,16 @@
     <f:DynamicPage
         id="dynamicPage"
         headerExpanded="true"
+        
     >
-        <f:title>
+        <f:title >
             <f:DynamicPageTitle>
                 <f:heading>
                     <HBox
                         width="100%"
                         justifyContent="Center"
                         alignItems="Center"
+                        
                     >
                         <Title
                             text="{i18n>title}"
