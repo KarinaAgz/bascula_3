@@ -94,11 +94,12 @@ sap.ui.define([
         onUpdateNumeroDoc: function () {
             var oView = this.getView();
             var oInput = oView.byId("numeroDocInput");
-            var sNewNumeroDoc = oInput.getValue().trim(); // Valor ingresado por el usuario
+            var sNewNumeroDoc = oInput.getValue().trim();
 
             var oModel = this.getOwnerComponent().getModel("zbasc");
+            var sServiceUrl = oModel.sServiceUrl;
             var oRouter = this.getOwnerComponent().getRouter();
-            var sFolio = oRouter.getHashChanger().getHash().split("/")[1]; // Obtener el Folio de la URL
+            var sFolio = oRouter.getHashChanger().getHash().split("/")[1];
 
             if (!sFolio) {
                 MessageToast.show("No se pudo obtener el Folio.");
@@ -106,36 +107,66 @@ sap.ui.define([
             }
 
             var sPath = "/Folio('" + sFolio + "')";
+            var sFullUrl = sServiceUrl + sPath;
             var oData = {};
 
-            // Si el usuario ingresó un valor, lo enviamos; si no, no incluimos el campo en el PATCH
             if (sNewNumeroDoc) {
                 oData.NumeroDoc = sNewNumeroDoc;
             }
 
-            // Si no hay datos para actualizar, mostramos un mensaje y no hacemos la petición
             if (Object.keys(oData).length === 0) {
                 MessageToast.show("No se ingresó un nuevo número de documento. No se realizará ninguna actualización.");
                 return;
             }
 
             oView.setBusy(true);
-            $.ajax({
-                url: oModel.sServiceUrl + sPath,
-                type: "PATCH",
-                contentType: "application/json",
-                data: JSON.stringify(oData),
+
+            // Paso 1: Obtener el token CSRF con una solicitud GET
+            console.log("Obteniendo token CSRF desde:", sFullUrl);
+            $.ajax({ //permite gacer solicitud http al servidor
+                url: sFullUrl,
+                type: "GET",
+                headers: {
+                    "X-CSRF-Token": "Fetch" //el servidor devuelve un token
+                },
                 success: function (data, status, xhr) {
-                    oView.setBusy(false);
-                    MessageToast.show("Número de documento actualizado exitosamente.");
-                    // Actualizar el modelo local para reflejar el cambio
-                    var oDetailsModel = oView.getModel("detail");
-                    oDetailsModel.setProperty("/NumeroDoc", sNewNumeroDoc);
+                    var sCsrfToken = xhr.getResponseHeader("X-CSRF-Token");
+                    console.log("Token CSRF recibido:", sCsrfToken);
+                    if (!sCsrfToken) {
+                        oView.setBusy(false);
+                        MessageToast.show("Error: No se recibió el token CSRF del servidor.");
+                        console.error("No se encontró el token CSRF en la respuesta del servidor.");
+                        return;
+                    }
+
+                    // Paso 2: Hacer la solicitud PATCH con el token CSRF
+                    console.log("Enviando solicitud PATCH a:", sFullUrl);
+                    console.log("Datos enviados:", oData);
+                    $.ajax({
+                        url: sFullUrl,
+                        type: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": sCsrfToken
+                        },
+                        data: JSON.stringify(oData),
+                        success: function (data, status, response) {
+                            oView.setBusy(false);
+                            MessageToast.show("Número de documento actualizado correctamente.");
+                            var oDetailsModel = oView.getModel("detail");
+                            oDetailsModel.setProperty("/NumeroDoc", sNewNumeroDoc);
+                        },
+                        error: function (xhr, status, error) {
+                            oView.setBusy(false);
+                            MessageToast.show("Error al actualizar el número de documento: " + error);
+                            console.error("Error en AJAX:", xhr.responseText);
+                        }
+                    });
                 },
                 error: function (xhr, status, error) {
                     oView.setBusy(false);
-                    MessageToast.show("Error al actualizar el número de documento: " + error);
-                    console.error("Error en AJAX:", xhr.responseText);
+                    MessageToast.show("Error al obtener el token CSRF: " + error);
+                    console.error("Error al obtener el token CSRF:", xhr.responseText);
                 }
             });
         }

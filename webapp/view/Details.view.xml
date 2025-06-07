@@ -31,7 +31,7 @@
                         <core:Title text="Información General" class="elegantSectionTitle"/>
                         <Label text="{i18n>tipoTicket}"/>
                         <Text text="{ path: 'zbasc>/Tipoticket', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>CentroEntrada}"/>
+                        <Label text="{i18n>centroEntrada}"/>
                         <Text text="{ path: 'zbasc>/CentroEnt', formatter: '.defaultText' }"/>
                         <Label text="{i18n>centroSalida}"/>
                         <Text text="{ path: 'zbasc>/CentroSal', formatter: '.defaultText' }"/>
@@ -39,7 +39,7 @@
                         <Text text="{ path: 'zbasc>/Material', formatter: '.defaultText' }"/>
                         <Label text="{i18n>conductor}"/>
                         <Text text="{ path: 'zbasc>/Conductor', formatter: '.defaultText' }"/>
-                        <Label text="i18n>placa"/>
+                        <Label text="{i18n>placa}"/>
                         <Text text="{ path: 'zbasc>/Placa', formatter: '.defaultText' }"/>
 
                         <core:Title text="{i18n>datosdePesaje}" class="SectionTitle"/>
