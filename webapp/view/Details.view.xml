@@ -1,95 +1,153 @@
-<mvc:XMLView 
-    xmlns:mvc="sap.ui.core.mvc" 
-    xmlns="sap.m" 
-    xmlns:form="sap.ui.layout.form" 
-    xmlns:core="sap.ui.core" 
-    controllerName="delmex.bascula3.controller.Details">
-    <Page 
-        title="{i18n>title}" 
-        showNavButton="true" 
+<mvc:XMLView
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    controllerName="delmex.bascula3.controller.Details"
+>
+    <Page
+        title="{i18n>title}"
+        showNavButton="true"
         navButtonPress="goBackBtn"
-        class="customPage page">
+        class="customPage page"
+    >
         <content>
             <VBox class="sapUiSmallMargin VBox ">
-                <Title 
-                    text="Detalle del Folio: {zbasc>/Folio}" 
-                    level="H2" 
-                    class="sapUiMediumMarginBottom"/>
-                <form:SimpleForm 
-                    editable="false" 
-                    layout="ResponsiveGridLayout" 
-                    labelSpanXL="4" 
-                    labelSpanL="4" 
-                    labelSpanM="4" 
-                    labelSpanS="12" 
-                    adjustLabelSpan="false" 
-                    columnsXL="2" 
-                    columnsL="2" 
+                <Title
+                    text="Detalle del Folio: {zbasc>Folio}"
+                    level="H2"
+                    class="sapUiMediumMarginBottom"
+                />
+                <form:SimpleForm
+                    id="detailForm" 
+                    editable="false"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="4"
+                    labelSpanM="4"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    columnsXL="2"
+                    columnsL="2"
                     columnsM="1"
-                    class="Form">
+                    class="Form"
+                >
                     <form:content>
-                        <core:Title text="Información General" class="elegantSectionTitle"/>
-                        <Label text="{i18n>tipoTicket}"/>
-                        <Text text="{ path: 'zbasc>/Tipoticket', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>centroEntrada}"/>
-                        <Text text="{ path: 'zbasc>/CentroEnt', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>centroSalida}"/>
-                        <Text text="{ path: 'zbasc>/CentroSal', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>material}"/>
-                        <Text text="{ path: 'zbasc>/Material', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>conductor}"/>
-                        <Text text="{ path: 'zbasc>/Conductor', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>placa}"/>
-                        <Text text="{ path: 'zbasc>/Placa', formatter: '.defaultText' }"/>
+                        <core:Title
+                            text="Información General"
+                            class="elegantSectionTitle"
+                        />
+                        <Label text="{i18n>tipoTicket}" />
+                        <Text
+                            text="{ path: 'zbasc>Tipoticket', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>centroEntrada}" />
+                        <Text
+                            text="{ path: 'zbasc>CentroEnt', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>centroSalida}" />
+                        <Text
+                            text="{ path: 'zbasc>CentroSal', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>material}" />
+                        <Text
+                            text="{ path: 'zbasc>Material', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>conductor}" />
+                        <Text
+                            text="{ path: 'zbasc>Conductor', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>placa}" />
+                        <Text
+                            text="{ path: 'zbasc>Placa', formatter: '.defaultText' }"
+                        />
 
-                        <core:Title text="{i18n>datosdePesaje}" class="SectionTitle"/>
-                        <Label text="{i18n>basculaEntrada}"/>
-                        <Text text="{ path: 'zbasc>/BasculaEnt', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>basculaSalida}"/>
-                        <Text text="{ path: 'zbasc>/BasculaSal', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>pesaje1enkg}"/>
-                        <Text text="{ path: 'zbasc>/Pesaje', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>pesaje2enkg}"/>
-                        <Text text="{ path: 'zbasc>/Pesaje2', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>pesoNeto}"/>
-                        <Text text="{ path: 'zbasc>/PesoNeto', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>PesoTeorico}"/>
-                        <Text text="{ path: 'zbasc>/PesoTeorico', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>diferencia}"/>
-                        <Text text="{ path: 'zbasc>/Diferencia', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>valor}"/>
-                        <Text text="{ path: 'zbasc>/Valor', formatter: '.defaultText' }"/>
+                        <core:Title
+                            text="{i18n>datosdePesaje}"
+                            class="SectionTitle"
+                        />
+                        <Label text="{i18n>basculaEntrada}" />
+                        <Text
+                            text="{ path: 'zbasc>BasculaEnt', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>basculaSalida}" />
+                        <Text
+                            text="{ path: 'zbasc>BasculaSal', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>pesaje1enkg}" />
+                        <Text
+                            text="{ path: 'zbasc>Pesaje', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>pesaje2enkg}" />
+                        <Text
+                            text="{ path: 'zbasc>Pesaje2', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>pesoNeto}" />
+                        <Text
+                            text="{ path: 'zbasc>PesoNeto', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>PesoTeorico}" />
+                        <Text
+                            text="{ path: 'zbasc>PesoTeorico', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>diferencia}" />
+                        <Text
+                            text="{ path: 'zbasc>Diferencia', formatter: '.defaultText' }"
+                        />
+                        <Label text="{i18n>valor}" />
+                        <Text
+                            text="{ path: 'zbasc>Valor', formatter: '.defaultText' }"
+                        />
 
+                        <core:Title
+                            text="Fechas y Proceso"
+                            class="elegantSectionTitle"
+                        />
+                        <Label text="{i18n>fechaEntradaBascula}" />
+                        <Text
+                            text="{ path: 'zbasc>FechaEntBas', formatter: '.formatDateTime' }"
+                        />
+                        <Label text="{i18n>fechaSalidaBascula}" />
+                        <Text
+                            text="{ path: 'zbasc>FechaSalBas', formatter: '.formatDateTime' }"
+                        />
+                        <Label text="{i18n>proceso}" />
+                        <Text
+                            text="{ path: 'zbasc>Proceso', formatter: '.defaultText' }"
+                        />
 
-                        <core:Title text="Fechas y Proceso" class="elegantSectionTitle"/>
-                        <Label text="{i18n>fechaEntradaBascula}"/>
-                        <Text text="{ path: 'zbasc>/FechaEntBas', formatter: '.formatDateTime' }"/>
-                        <Label text="{i18n>fechaSalidaBascula}"/>
-                        <Text text="{ path: 'zbasc>/FechaSalBas', formatter: '.formatDateTime' }"/>
-                        <Label text="{i18n>proceso}"/>
-                        <Text text="{ path: 'zbasc>/Proceso', formatter: '.defaultText' }"/>
-                        <Label text="{i18n>numeroDocumento}"/>
-                        <Text text="{ path: 'zbasc>/NumeroDoc', formatter: '.defaultText' }"/>
-
-                        <core:Title text="Resultados" class="SectionTitle"/>
-                        
-
-                        <Label text="{i18n>numeroDocumento}"/>
-                        <Input id="numeroDocInput" value="{ path: 'detail>/NumeroDoc', formatter: '.defaultText' }" class="editableField" width="140px"/>
-                        
-                        <Label text="{i18n>mensaje}"/>
-                        <Text text="{ path: 'zbasc>/Mensaje'}"/>
+                        <core:Title
+                            text="Resultados"
+                            class="SectionTitle"
+                        />
+                        <Label text="{i18n>numeroDocumento}" />
+                        <Input
+                            id="numeroDocInput"
+                            value="{zbasc>NumeroDoc}"
+                            width="140px"
+                        />
+                        <Label text="{i18n>mensaje}" />
+                        <Text text="{zbasc>Mensaje}" />
                     </form:content>
                 </form:SimpleForm>
-                <HBox justifyContent="End" class="buttonContainer">
-                <Button  text="{i18n>descargar}"
-                         icon="sap-icon://pdf-attachment"
-                         press="onDownloadPDF"
-                         type="Emphasized"/>
-                <ToolbarSeparator />
-                <ToolbarSeparator />
-                
-                <Button text="{i18n>actualizar}" press="onUpdateNumeroDoc" type="Emphasized" />
+                <HBox
+                    justifyContent="End"
+                    class="buttonContainer"
+                >
+                    <Button
+                        text="{i18n>descargar}"
+                        icon="sap-icon://pdf-attachment"
+                        press="onDownloadPDF"
+                        type="Emphasized"
+                    />
+                    <ToolbarSeparator />
+                    <ToolbarSeparator />
+
+                    <Button
+                        text="{i18n>actualizar}"
+                        press="onUpdateNumeroDoc"
+                        type="Emphasized"
+                    />
                 </HBox>
             </VBox>
         </content>

@@ -18,7 +18,6 @@ sap.ui.define([
                 MessageToast.show("Folio no proporcionado.");
                 return;
             }
-            
             this._loadDetails(sFolio);
         },
 
@@ -38,12 +37,17 @@ sap.ui.define([
 
             oModel.read(sPath, {
                 success: function (oData) {
-                    console.log("Datos recibidos del servicio:", oData); // Depuración
-                    // Crear un modelo JSON con los datos
-                    var oDetailsModel = new JSONModel(oData);
-                    oView.setModel(oDetailsModel, "zbasc");
+                    console.log("Datos recibidos del servicio:", oData);
+                    var oContext = new sap.ui.model.Context(oModel, sPath);
+                    var oForm = oView.byId("detailForm");
+                    if (oForm) {
+                        oForm.setBindingContext(oContext, "zbasc");
+                        console.log("Contexto establecido en el formulario:", oContext.getPath(), "Datos en contexto:", oContext.getObject());
+                    } else {
+                        console.error("No se encontró el formulario con ID 'detailForm'");
+                    }
                     oView.setBusy(false);
-                   console.log("Detalles cargados para el Folio: " + sFolio);
+                    console.log("Detalles cargados para el Folio: " + sFolio);
                 }.bind(this),
                 error: function (oError) {
                     oView.setBusy(false);
@@ -65,11 +69,11 @@ sap.ui.define([
         formatDateTime: function (sDateTime) {
             if (!sDateTime || sDateTime === "No disponible") return "No disponible";
             try {
-                var sDatePart = sDateTime.substring(0, 8); // Extraer YYYYMMDD
+                var sDatePart = sDateTime.substring(0, 8);
                 var oDate = new Date(
-                    sDatePart.substring(0, 4), // Año
-                    sDatePart.substring(4, 6) - 1, // Mes (0-11)
-                    sDatePart.substring(6, 8) // Día
+                    sDatePart.substring(0, 4),
+                    sDatePart.substring(4, 6) - 1,
+                    sDatePart.substring(6, 8)
                 );
                 return oDate.toLocaleDateString("es-MX", { day: '2-digit', month: '2-digit', year: 'numeric' });
             } catch (e) {
@@ -78,97 +82,98 @@ sap.ui.define([
             }
         },
         
-         
         onDownloadPDF: function () {
-            // Verifica si hay datos
             var oModel = this.getView().getModel("zbasc");
             if (!oModel || !oModel.getData()) {
                 MessageToast.show("No hay datos para descargar.");
                 return;
             }
 
-            // Activa la impresión del navegador
             window.print();
             MessageToast.show("Selecciona 'Guardar como PDF' en la ventana de impresión.");
         },
-        onUpdateNumeroDoc: function () {
+
+        _fetchCsrfToken: function (sUrl) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: sUrl,
+                    method: "GET",
+                    headers: {
+                        "X-CSRF-Token": "Fetch",
+                        "Accept": "application/json"
+                    },
+                    success: function (_data, _status, xhr) {
+                        let sToken = xhr.getResponseHeader("X-CSRF-Token");
+                        if (sToken) {
+                            resolve(sToken);
+                        } else {
+                            reject("No se recibió el token CSRF.");
+                        }
+                    },
+                    error: function (oError) {
+                        reject("Error al obtener el token CSRF: " + oError.statusText);
+                    }
+                });
+            });
+        },
+
+        onUpdateNumeroDoc: async function () {
             var oView = this.getView();
             var oInput = oView.byId("numeroDocInput");
             var sNewNumeroDoc = oInput.getValue().trim();
-
             var oModel = this.getOwnerComponent().getModel("zbasc");
-            var sServiceUrl = oModel.sServiceUrl;
-            var oRouter = this.getOwnerComponent().getRouter();
-            var sFolio = oRouter.getHashChanger().getHash().split("/")[1];
+            var oContext = oView.byId("detailForm").getBindingContext("zbasc");
 
+            if (!oContext || !sNewNumeroDoc) {
+                MessageToast.show("No se pudo obtener el contexto o el número de documento está vacío.");
+                return;
+            }
+
+            const sFolio = oContext.getProperty("Folio");
             if (!sFolio) {
                 MessageToast.show("No se pudo obtener el Folio.");
                 return;
             }
 
-            var sPath = "/Folio('" + sFolio + "')";
-            var sFullUrl = sServiceUrl + sPath;
-            var oData = {};
-
-            if (sNewNumeroDoc) {
-                oData.NumeroDoc = sNewNumeroDoc;
-            }
-
-            if (Object.keys(oData).length === 0) {
-                MessageToast.show("No se ingresó un nuevo número de documento. No se realizará ninguna actualización.");
-                return;
-            }
-
             oView.setBusy(true);
 
-            // Paso 1: Obtener el token CSRF con una solicitud GET
-            console.log("Obteniendo token CSRF desde:", sFullUrl);
-            $.ajax({ //permite gacer solicitud http al servidor
-                url: sFullUrl,
-                type: "GET",
-                headers: {
-                    "X-CSRF-Token": "Fetch" //el servidor devuelve un token
-                },
-                success: function (data, status, xhr) {
-                    var sCsrfToken = xhr.getResponseHeader("X-CSRF-Token");
-                    console.log("Token CSRF recibido:", sCsrfToken);
-                    if (!sCsrfToken) {
-                        oView.setBusy(false);
-                        MessageToast.show("Error: No se recibió el token CSRF del servidor.");
-                        console.error("No se encontró el token CSRF en la respuesta del servidor.");
-                        return;
-                    }
+            try {
+                const sServiceUrl = oModel.sServiceUrl;
+                const sPath = `/Alta('${sFolio}')`; // Usamos /Alta 
+                const sFullUrl = sServiceUrl + sPath;
 
-                    // Paso 2: Hacer la solicitud PATCH con el token CSRF
-                    console.log("Enviando solicitud PATCH a:", sFullUrl);
-                    console.log("Datos enviados:", oData);
-                    $.ajax({
-                        url: sFullUrl,
-                        type: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-Token": sCsrfToken
-                        },
-                        data: JSON.stringify(oData),
-                        success: function (data, status, response) {
-                            oView.setBusy(false);
-                            MessageToast.show("Número de documento actualizado correctamente.");
-                            var oDetailsModel = oView.getModel("detail");
-                            oDetailsModel.setProperty("/NumeroDoc", sNewNumeroDoc);
-                        },
-                        error: function (xhr, status, error) {
-                            oView.setBusy(false);
-                            MessageToast.show("Error al actualizar el número de documento: " + error);
-                            console.error("Error en AJAX:", xhr.responseText);
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    oView.setBusy(false);
-                    MessageToast.show("Error al obtener el token CSRF: " + error);
-                    console.error("Error al obtener el token CSRF:", xhr.responseText);
-                }
-            });
+                const sToken = await this._fetchCsrfToken(sServiceUrl + "/Folio('0')"); // Obtener token
+                console.log("Token CSRF obtenido:", sToken);
+
+                await $.ajax({
+                    url: sFullUrl,
+                    method: "PATCH",
+                    headers: {
+                        "X-CSRF-Token": sToken,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    data: JSON.stringify({
+                        NumeroDoc: sNewNumeroDoc
+                    }),
+                    success: () => {
+                        MessageToast.show("Número de documento actualizado correctamente.");
+                        oModel.refresh(true); // Refresca el modelo para reflejar los cambios
+                        oContext.setProperty("NumeroDoc", sNewNumeroDoc); // Actualiza el contexto
+                    },
+                    error: (oError) => {
+                        let sErrorMessage = oError.responseJSON?.error?.message?.value || "Error desconocido";
+                        MessageToast.show("Error al actualizar: " + sErrorMessage);
+                        console.error("Error al actualizar:", oError);
+                    }
+                });
+            } catch (error) {
+                oView.setBusy(false);
+                console.error(" Error obteniendo CSRF Token o actualizando:", error);
+                MessageToast.show("Error al procesar la solicitud: " + error.message);
+            }
+
+            oView.setBusy(false);
         }
     });
 });
