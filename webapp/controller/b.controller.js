@@ -1,4 +1,4 @@
-//@ui5-bundle delmex/zmmbascula/Component-preload.js
+
 sap.ui.require.preload({
     "delmex/zmmbascula/Component-preload.js": function() {
     },
@@ -19,7 +19,7 @@ sap.ui.require.preload({
         }
         );
     },
-    "delmex/zmmbascula/controller/App.controller.js": function() {
+    "bascula/controller/App.controller.js": function() {
         sap.ui.define(["sap/ui/core/mvc/Controller"], e => {
             "use strict";
             return e.extend("delmex.zmmbascula.controller.App", {
@@ -28,7 +28,7 @@ sap.ui.require.preload({
         }
         );
     },
-    "delmex/zmmbascula/controller/BaseController.js": function() {
+    "bascula/controller/BaseController.js": function() {
         sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/m/MessageBox"], (e, t, o) => {
             "use strict";
             return e.extend("delmex.zmmbascula.controller.BaseController", {
@@ -306,10 +306,10 @@ sap.ui.require.preload({
         }
         );
     },
-    "delmex/zmmbascula/controller/Detail.controller.js": function() {
-        sap.ui.define(["delmex/zmmbascula/controller/BaseController", "sap/ui/model/json/JSONModel", "sap/ui/model/Filter", "sap/ui/model/FilterOperator", "sap/m/MessageBox", "sap/m/PDFViewer", "delmex/zmmbascula/util/formatter", "sap/ui/core/BusyIndicator"], (e, t, o, a, s, i, r, l) => {
+    "bascula/controller/Detail.controller.js": function() {
+        sap.ui.define(["bascula/controller/BaseController", "sap/ui/model/json/JSONModel", "sap/ui/model/Filter", "sap/ui/model/FilterOperator", "sap/m/MessageBox", "sap/m/PDFViewer", "delmex/zmmbascula/util/formatter", "sap/ui/core/BusyIndicator"], (e, t, o, a, s, i, r, l) => {
             "use strict";
-            return e.extend("delmex.zmmbascula.controller.Detail", {
+            return e.extend("bascula.controller.Detail", {
                 formatter: r,
                 onInit() {
                     let e = this.getCatalogsModel();
@@ -405,8 +405,8 @@ sap.ui.require.preload({
         }
         );
     },
-    "delmex/zmmbascula/controller/Main.controller.js": function() {
-        sap.ui.define(["delmex/zmmbascula/controller/BaseController", "delmex/zmmbascula/util/formatter", "sap/ui/model/json/JSONModel", "sap/ui/model/Filter", "sap/ui/model/FilterOperator", "sap/m/MessageBox", "sap/ui/core/BusyIndicator"], (e, t, o, s, l, i, r) => {
+    "bascula/controller/Main.controller.js": function() {
+        sap.ui.define(["bascula/controller/BaseController", "bascula/util/formatter", "sap/ui/model/json/JSONModel", "sap/ui/model/Filter", "sap/ui/model/FilterOperator", "sap/m/MessageBox", "sap/ui/core/BusyIndicator"], (e, t, o, s, l, i, r) => {
             "use strict";
             return e.extend("delmex.zmmbascula.controller.Main", {
                 formatter: t,
@@ -504,35 +504,7 @@ sap.ui.require.preload({
         }
         )(function() {
             "use strict";
-            /** @license
-     * jsPDF - PDF Document creation from JavaScript
-     * Version 1.5.3 Built on 2018-12-27T14:11:42.696Z
-     *                      CommitID d93d28db14
-     *
-     * Copyright (c) 2010-2016 James Hall <james@parall.ax>, https://github.com/MrRio/jsPDF
-     *               2010 Aaron Spike, https://github.com/acspike
-     *               2012 Willow Systems Corporation, willow-systems.com
-     *               2012 Pablo Hess, https://github.com/pablohess
-     *               2012 Florian Jenett, https://github.com/fjenett
-     *               2013 Warren Weckesser, https://github.com/warrenweckesser
-     *               2013 Youssef Beddad, https://github.com/lifof
-     *               2013 Lee Driscoll, https://github.com/lsdriscoll
-     *               2013 Stefan Slonevskiy, https://github.com/stefslon
-     *               2013 Jeremy Morel, https://github.com/jmorel
-     *               2013 Christoph Hartmann, https://github.com/chris-rock
-     *               2014 Juan Pablo Gaviria, https://github.com/juanpgaviria
-     *               2014 James Makes, https://github.com/dollaruw
-     *               2014 Diego Casorran, https://github.com/diegocr
-     *               2014 Steven Spungin, https://github.com/Flamenco
-     *               2014 Kenneth Glassey, https://github.com/Gavvers
-     *
-     * Licensed under the MIT License
-     *
-     * Contributor(s):
-     *    siefkenj, ahwolf, rickygu, Midnith, saintclair, eaparango,
-     *    kim3er, mfo, alnorth, Flamenco
-     */
-            function t(e) {
+                function t(e) {
                 if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
                     t = function(t) {
                         return typeof t
@@ -6189,19 +6161,7 @@ sap.ui.require.preload({
                 return this
             }
             )(e.API);
-            /** 
-     * @license
-     * ====================================================================
-     * Copyright (c) 2013 Youssef Beddad, youssef.beddad@gmail.com
-     *               2013 Eduardo Menezes de Morais, eduardo.morais@usp.br
-     *               2013 Lee Driscoll, https://github.com/lsdriscoll
-     *               2014 Juan Pablo Gaviria, https://github.com/juanpgaviria
-     *               2014 James Hall, james@parall.ax
-     *               2014 Diego Casorran, https://github.com/diegocr
-     *
-     * 
-     * ====================================================================
-     */
+           
             (function(t) {
                 var e = 3, r = 13, n, i = {
                     x: undefined,
@@ -8108,13 +8068,8 @@ sap.ui.require.preload({
                 }
             }
             )(e.API, typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function("return this")());
-            /**
-     * jsPDF filters PlugIn
-     * Copyright (c) 2014 Aras Abbasi 
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+           
+    
             (function(t) {
                 var e = function t(e) {
                     var r, n, i, a, o, s, f, u, l, h;
@@ -8261,13 +8216,8 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * jsPDF fileloading PlugIn
-     * Copyright (c) 2018 Aras Abbasi (aras.abbasi@gmail.com)
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+            
+    
             (function(t) {
                 t.loadFile = function(t, e, r) {
                     e = e || true;
@@ -8313,13 +8263,7 @@ sap.ui.require.preload({
                 t.loadImageFile = t.loadFile
             }
             )(e.API);
-            /**
-     * Copyright (c) 2018 Erik Koopmans
-     * Released under the MIT License.
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+       
             (function(r, n) {
                 var i = function e(r) {
                     var n = t(r);
@@ -8984,14 +8928,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API, typeof window !== "undefined" && window || typeof global !== "undefined" && global);
-            /**
-     * @license
-     * ==================================================================== 
-     * Copyright (c) 2013 Youssef Beddad, youssef.beddad@gmail.com
-     * 
-     * 
-     * ====================================================================
-     */
+      
             (function(t) {
                 var e, r, n;
                 t.addJS = function(t) {
@@ -9018,13 +8955,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * @license
-     * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+          
             (function(t) {
                 t.events.push(["postPutResources", function() {
                     var t = this;
@@ -9193,14 +9124,7 @@ sap.ui.require.preload({
                 return this
             }
             )(e.API);
-            /**
-     * @license
-     * 
-     * Copyright (c) 2014 James Robb, https://github.com/jamesbrobb
-     *
-     * 
-     * ====================================================================
-     */
+           
             (function(t) {
                 var e = function t() {
                     return typeof PNG !== "function" || typeof l !== "function"
@@ -9482,13 +9406,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * @license
-     * Copyright (c) 2017 Aras Abbasi 
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+        
             (function(t) {
                 t.processGIF89A = function(e, r, n, i, o) {
                     var f = new a(e);
@@ -9510,12 +9428,7 @@ sap.ui.require.preload({
                 t.processGIF87A = t.processGIF89A
             }
             )(e.API);
-            /**
-     * Copyright (c) 2018 Aras Abbasi 
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+          
             (function(t) {
                 t.processBMP = function(e, r, n, i, a) {
                     var o = new f(e,false);
@@ -9534,11 +9447,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * @license
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+        
             (function(t) {
                 t.setLanguage = function(t) {
                     var e = {
@@ -9756,14 +9665,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /** @license
-     * MIT license.
-     * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-     *               2014 Diego Casorran, https://github.com/diegocr
-     *
-     * 
-     * ====================================================================
-     */
+         
             (function(t) {
                 var e = t.getCharWidthsArray = function(t, e) {
                     e = e || {};
@@ -9964,13 +9866,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /** @license
-     jsPDF standard_fonts_metrics plugin
-     * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-     * MIT license.
-     * 
-     * ====================================================================
-     */
+        
             (function(t) {
                 var e = function t(e) {
                     var r = "0123456789abcdef"
@@ -10096,11 +9992,7 @@ sap.ui.require.preload({
                 ])
             }
             )(e.API);
-            /**
-     * @license
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+       
             (function(t, e) {
                 t.API.events.push(["addFont", function(e) {
                     var r = e.font;
@@ -10124,12 +10016,7 @@ sap.ui.require.preload({
                 ])
             }
             )(e, typeof self !== "undefined" && self || typeof global !== "undefined" && global || typeof window !== "undefined" && window || Function("return this")());
-            /** @license
-     * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-     * 
-     * 
-     * ====================================================================
-     */
+        
             (function(t) {
                 t.addSvg = function(t, e, r, n, i) {
                     var a;
@@ -10240,14 +10127,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /** 
-     * @license
-     * ==================================================================== 
-     * Copyright (c) 2013 Eduardo Menezes de Morais, eduardo.morais@usp.br
-     * 
-     * 
-     * ====================================================================
-     */
+       
             (function(t) {
                 t.putTotalPages = function(t) {
                     var e;
@@ -10268,12 +10148,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * jsPDF viewerPreferences Plugin
-     * @author Aras Abbasi (github.com/arasabbasi)
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+           
             (function(e) {
                 e.viewerPreferences = function(e, r) {
                     e = e || {};
@@ -10506,13 +10381,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /** ==================================================================== 
-     * jsPDF XMP metadata plugin
-     * Copyright (c) 2016 Jussi Utunen, u-jussi@suomi24.fi
-     * 
-     * 
-     * ====================================================================
-     */
+       
             (function(t) {
                 var e = "";
                 var r = "";
@@ -10826,12 +10695,7 @@ sap.ui.require.preload({
                 r.events.push(["postProcessText", u])
             }
             )(e, typeof self !== "undefined" && self || typeof global !== "undefined" && global || typeof window !== "undefined" && window || Function("return this")());
-            /**
-     * jsPDF virtual FileSystem functionality
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+      
             (function(t) {
                 var e = function t(e) {
                     if (typeof e === "undefined") {
@@ -10864,13 +10728,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * jsPDF addHTML PlugIn
-     * Copyright (c) 2014 Diego Casorran
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+         
             (function(t) {
                 t.addHTML = function(t, e, r, n, i) {
                     if (typeof html2canvas === "undefined" && typeof rasterizeHTML === "undefined")
@@ -11015,19 +10873,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * jsPDF fromHTML plugin. BETA stage. API subject to change. Needs browser
-     * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-     *               2014 Juan Pablo Gaviria, https://github.com/juanpgaviria
-     *               2014 Diego Casorran, https://github.com/diegocr
-     *               2014 Daniel Husar, https://github.com/danielhusar
-     *               2014 Wolfgang Gassler, https://github.com/woolfg
-     *               2014 Steven Spungin, https://github.com/flamenco
-     *
-     * @license
-     * 
-     * ====================================================================
-     */
+    
             (function(e) {
                 var r, n, i, a, o, s, f, u, l, h, c, d, p, v, g, m, y, w, b, x;
                 r = function() {
@@ -11900,13 +11746,7 @@ sap.ui.require.preload({
                 }
             }
             )(e.API);
-            /**
-     * html2pdf.js
-     * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+           
             (function(t, e) {
                 e.html2pdf = function(t, e, r) {
                     var n = e.canvas;
@@ -12010,15 +11850,7 @@ sap.ui.require.preload({
             }
             )(e.API, typeof window !== "undefined" && window || typeof global !== "undefined" && global);
             window.tmp = html2pdf;
-            /* Blob.js
-     * A Blob, File, FileReader & URL implementation.
-     * 2018-08-09
-     *
-     * By Eli Grey, http://eligrey.com
-     * By Jimmy Wärting, https://github.com/jimmywarting
-     * License: MIT
-     *   See https://github.com/eligrey/Blob.js/blob/master/LICENSE.md
-     */
+         
             (function(t) {
                 var e = t.BlobBuilder || t.WebKitBlobBuilder || t.MSBlobBuilder || t.MozBlobBuilder;
                 t.URL = t.URL || t.webkitURL || function(t, e) {
@@ -12349,15 +12181,7 @@ sap.ui.require.preload({
                 }
             }
             )(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function("return this")());
-            /* FileSaver.js
-     * A saveAs() FileSaver implementation.
-     * 1.3.8
-     * 2018-03-22 14:03:47
-     *
-     * By Eli Grey, https://eligrey.com
-     * License: MIT
-     *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
-     */
+           
             var r = r || function(t) {
                 if (typeof t === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
                     return
@@ -13014,12 +12838,7 @@ sap.ui.require.preload({
                 exports.GifReader = a
             } catch (t) {}
             window.tmp = a;
-            /*
-     * Copyright (c) 2012 chick307 <chick307@gmail.com>
-     *
-     * Licensed under the MIT License.
-     * http://opensource.org/licenses/mit-license
-     */
+         
             (function(t, e) {
                 t.API.adler32cs = e()
             }
@@ -13172,10 +12991,7 @@ sap.ui.require.preload({
                 }
                 return s
             });
-            /**
-    * Unicode Bidi Engine based on the work of Alex Shensis (@asthensis)
-    * MIT License
-    */
+          
             (function(t) {
                 var e = ["BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "S", "B", "S", "WS", "B", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "B", "B", "B", "S", "WS", "N", "N", "ET", "ET", "ET", "N", "N", "N", "N", "N", "ES", "CS", "ES", "CS", "CS", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "CS", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "N", "BN", "BN", "BN", "BN", "BN", "BN", "B", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "BN", "CS", "N", "ET", "ET", "ET", "ET", "N", "N", "N", "N", "L", "N", "N", "BN", "N", "N", "ET", "ET", "EN", "EN", "N", "L", "N", "N", "N", "EN", "L", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "L", "L", "L", "L", "L", "L", "L", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "L", "N", "N", "N", "N", "N", "ET", "N", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "R", "NSM", "R", "NSM", "NSM", "R", "NSM", "NSM", "R", "NSM", "N", "N", "N", "N", "N", "N", "N", "N", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "N", "N", "N", "N", "N", "R", "R", "R", "R", "R", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "AN", "AN", "AN", "AN", "AN", "AN", "N", "N", "AL", "ET", "ET", "AL", "CS", "AL", "N", "N", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "AL", "AL", "N", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "AN", "AN", "AN", "AN", "AN", "AN", "AN", "AN", "AN", "AN", "ET", "AN", "AN", "AL", "AL", "AL", "NSM", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "AN", "N", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "AL", "AL", "NSM", "NSM", "N", "NSM", "NSM", "NSM", "NSM", "AL", "AL", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "N", "AL", "AL", "NSM", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "N", "N", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "AL", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "R", "R", "N", "N", "N", "N", "R", "N", "N", "N", "N", "N", "WS", "WS", "WS", "WS", "WS", "WS", "WS", "WS", "WS", "WS", "WS", "BN", "BN", "BN", "L", "R", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "WS", "B", "LRE", "RLE", "PDF", "LRO", "RLO", "CS", "ET", "ET", "ET", "ET", "ET", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "CS", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "WS", "BN", "BN", "BN", "BN", "BN", "N", "LRI", "RLI", "FSI", "PDI", "BN", "BN", "BN", "BN", "BN", "BN", "EN", "L", "N", "N", "EN", "EN", "EN", "EN", "EN", "EN", "ES", "ES", "N", "N", "N", "L", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "ES", "ES", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "ET", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "N", "N", "N", "N", "N", "R", "NSM", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "ES", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "N", "R", "R", "R", "R", "R", "N", "R", "N", "R", "R", "N", "R", "R", "N", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "NSM", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "CS", "N", "CS", "N", "N", "CS", "N", "N", "N", "N", "N", "N", "N", "N", "N", "ET", "N", "N", "ES", "ES", "N", "N", "N", "N", "N", "ET", "ET", "N", "N", "N", "N", "N", "AL", "AL", "AL", "AL", "AL", "N", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "AL", "N", "N", "BN", "N", "N", "N", "ET", "ET", "ET", "N", "N", "N", "N", "N", "ES", "CS", "ES", "CS", "CS", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "EN", "CS", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "N", "N", "N", "L", "L", "L", "L", "L", "L", "N", "N", "L", "L", "L", "L", "L", "L", "N", "N", "L", "L", "L", "L", "L", "L", "N", "N", "L", "L", "L", "N", "N", "N", "ET", "ET", "N", "N", "N", "ET", "ET", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"];
                 t.__bidiEngine__ = t.prototype.__bidiEngine__ = function(t) {
@@ -13569,37 +13385,7 @@ sap.ui.require.preload({
                 t.API.events.push(["postProcessText", i])
             }
             )(e);
-            /*
-      Copyright (c) 2008, Adobe Systems Incorporated
-      All rights reserved.
-  
-      Redistribution and use in source and binary forms, with or without 
-      modification, are permitted provided that the following conditions are
-      met:
-  
-      * Redistributions of source code must retain the above copyright notice, 
-        this list of conditions and the following disclaimer.
-      
-      * Redistributions in binary form must reproduce the above copyright
-        notice, this list of conditions and the following disclaimer in the 
-        documentation and/or other materials provided with the distribution.
-      
-      * Neither the name of Adobe Systems Incorporated nor the names of its 
-        contributors may be used to endorse or promote products derived from 
-        this software without specific prior written permission.
-  
-      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-      IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-      THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-      PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR 
-      CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-      EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-      PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-      LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-      NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-      SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    */
+           
             function s(t) {
                 var e = Math.floor;
                 var r = new Array(64);
@@ -14334,33 +14120,7 @@ sap.ui.require.preload({
             }
             ;
             window.tmp = f;
-            /*
-     Copyright (c) 2013 Gildas Lormeau. All rights reserved.
-  
-     Redistribution and use in source and binary forms, with or without
-     modification, are permitted provided that the following conditions are met:
-  
-     1. Redistributions of source code must retain the above copyright notice,
-     this list of conditions and the following disclaimer.
-  
-     2. Redistributions in binary form must reproduce the above copyright 
-     notice, this list of conditions and the following disclaimer in 
-     the documentation and/or other materials provided with the distribution.
-  
-     3. The names of the authors may not be used to endorse or promote products
-     derived from this software without specific prior written permission.
-  
-     THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
-     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-     FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JCRAFT,
-     INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
-     INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-     LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-     OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-     LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-     NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-     EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-     */
+           
             (function(t) {
                 var e = 15;
                 var r = 30;
@@ -15570,12 +15330,7 @@ sap.ui.require.preload({
                 it.Deflater = it._jzlib_Deflater = nt
             }
             )(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function("return this")());
-            /**
-     * A class to parse color values
-     * @author Stoyan Stefanov <sstoo@gmail.com>
-     * {@link   http://www.phpied.com/rgb-color-parser-in-javascript/}
-     * @license Use it if you like it
-     */
+           
             (function(t) {
                 function e(t) {
                     t = t || "";
@@ -16743,7 +16498,6 @@ sap.ui.require.preload({
                     ;
                     return e
                 }(c);
-                /* comment : Store copyright information, platformID, encodingID, and languageID in the NameEntry object.*/
                 var x = function() {
                     function t(t, e) {
                         this.raw = t;
@@ -17254,13 +17008,7 @@ sap.ui.require.preload({
                 }()
             }
             )(e);
-            /*
-    # PNG.js
-    # Copyright (c) 2011 Devon Govett
-    # MIT LICENSE
-    # 
-    # 
-    */
+           
             (function(t) {
                 var e;
                 e = function() {
@@ -17725,21 +17473,7 @@ sap.ui.require.preload({
                 t.PNG = e
             }
             )(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function("return this")());
-            /*
-     * Extracted from pdf.js
-     * https://github.com/andreasgal/pdf.js
-     *
-     * Copyright (c) 2011 Mozilla Foundation
-     *
-     * Contributors: Andreas Gal <gal@mozilla.com>
-     *               Chris G Jones <cjones@mozilla.com>
-     *               Shaon Barman <shaon.barman@gmail.com>
-     *               Vivien Nicolas <21@vingtetun.org>
-     *               Justin D'Arcangelo <justindarc@gmail.com>
-     *               Yury Delendik
-     *
-     * 
-     */
+        
             var u = function() {
                 function t() {
                     this.pos = 0;
@@ -18062,8 +17796,8 @@ sap.ui.require.preload({
             module.exports = jsPDF
         } catch (t) {}
     },
-    "delmex/zmmbascula/manifest.json": '{"_version":"1.65.0","sap.app":{"id":"delmex.zmmbascula","type":"application","i18n":"i18n/i18n.properties","applicationVersion":{"version":"0.0.1"},"title":"{{appTitle}}","description":"{{appDescription}}","resources":"resources.json","sourceTemplate":{"id":"@sap/generator-fiori:basic","version":"1.16.5","toolsId":"9484c494-8d24-4596-86f5-2d1f2ee123a4"},"dataSources":{"ZBASC_SRV":{"uri":"sap/opu/odata/sap/ZUI_BASCULA_SRV_V2/","type":"OData","settings":{"annotations":[],"localUri":"localService/mainService/metadata.xml","odataVersion":"2.0"}}},"crossNavigation":{"inbounds":{"bascula-display":{"semanticObject":"bascula","action":"display","title":"Báscula Delmex","subTitle":"Gestión de tickets","icon":"sap-icon://shipping-status","signature":{"parameters":{},"additionalParameters":"allowed"}}}},"navigationMode":"newWindow"},"sap.ui":{"technology":"UI5","icons":{"icon":"","favIcon":"","phone":"","phone@2":"","tablet":"","tablet@2":""},"deviceTypes":{"desktop":true,"tablet":true,"phone":true}},"sap.ui5":{"flexEnabled":true,"dependencies":{"minUI5Version":"1.133.0","libs":{"sap.m":{},"sap.ui.core":{}}},"contentDensities":{"compact":true,"cozy":true},"models":{"i18n":{"type":"sap.ui.model.resource.ResourceModel","settings":{"bundleName":"delmex.zmmbascula.i18n.i18n"}},"zbasc":{"dataSource":"ZBASC_SRV","preload":true,"settings":{"useBatch":false}}},"resources":{"css":[{"uri":"css/style.css"}],"js":[{"uri":"lib/jspdf.js"}]},"routing":{"config":{"routerClass":"sap.m.routing.Router","controlAggregation":"pages","controlId":"app","transition":"slide","type":"View","viewType":"XML","path":"delmex.zmmbascula.view","async":true,"viewPath":"delmex.zmmbascula.view"},"routes":[{"name":"RouteMain","pattern":":?query:","target":["TargetMain"]},{"name":"RouteDetail","pattern":"header/{folio}","target":["TargetDetail"]}],"targets":{"TargetMain":{"id":"Main","name":"Main"},"TargetDetail":{"id":"Detail","name":"Detail"}}},"rootView":{"viewName":"delmex.zmmbascula.view.App","type":"XML","id":"App"}},"sap.cloud":{"public":true,"service":"delmexbasculazmmbascula"}}',
-    "delmex/zmmbascula/model/models.js": function() {
+    "bascula/manifest.json": '{"_version":"1.65.0","sap.app":{"id":"delmex.zmmbascula","type":"application","i18n":"i18n/i18n.properties","applicationVersion":{"version":"0.0.1"},"title":"{{appTitle}}","description":"{{appDescription}}","resources":"resources.json","sourceTemplate":{"id":"@sap/generator-fiori:basic","version":"1.16.5","toolsId":"9484c494-8d24-4596-86f5-2d1f2ee123a4"},"dataSources":{"ZBASC_SRV":{"uri":"sap/opu/odata/sap/ZUI_BASCULA_SRV_V2/","type":"OData","settings":{"annotations":[],"localUri":"localService/mainService/metadata.xml","odataVersion":"2.0"}}},"crossNavigation":{"inbounds":{"bascula-display":{"semanticObject":"bascula","action":"display","title":"Báscula Delmex","subTitle":"Gestión de tickets","icon":"sap-icon://shipping-status","signature":{"parameters":{},"additionalParameters":"allowed"}}}},"navigationMode":"newWindow"},"sap.ui":{"technology":"UI5","icons":{"icon":"","favIcon":"","phone":"","phone@2":"","tablet":"","tablet@2":""},"deviceTypes":{"desktop":true,"tablet":true,"phone":true}},"sap.ui5":{"flexEnabled":true,"dependencies":{"minUI5Version":"1.133.0","libs":{"sap.m":{},"sap.ui.core":{}}},"contentDensities":{"compact":true,"cozy":true},"models":{"i18n":{"type":"sap.ui.model.resource.ResourceModel","settings":{"bundleName":"delmex.zmmbascula.i18n.i18n"}},"zbasc":{"dataSource":"ZBASC_SRV","preload":true,"settings":{"useBatch":false}}},"resources":{"css":[{"uri":"css/style.css"}],"js":[{"uri":"lib/jspdf.js"}]},"routing":{"config":{"routerClass":"sap.m.routing.Router","controlAggregation":"pages","controlId":"app","transition":"slide","type":"View","viewType":"XML","path":"delmex.zmmbascula.view","async":true,"viewPath":"delmex.zmmbascula.view"},"routes":[{"name":"RouteMain","pattern":":?query:","target":["TargetMain"]},{"name":"RouteDetail","pattern":"header/{folio}","target":["TargetDetail"]}],"targets":{"TargetMain":{"id":"Main","name":"Main"},"TargetDetail":{"id":"Detail","name":"Detail"}}},"rootView":{"viewName":"delmex.zmmbascula.view.App","type":"XML","id":"App"}},"sap.cloud":{"public":true,"service":"delmexbasculazmmbascula"}}',
+    "bascula/model/models.js": function() {
         sap.ui.define(["sap/ui/model/json/JSONModel", "sap/ui/Device"], function(e, n) {
             "use strict";
             return {
@@ -18075,7 +17809,7 @@ sap.ui.require.preload({
             }
         });
     },
-    "delmex/zmmbascula/util/formatter.js": function() {
+    "bascula/util/formatter.js": function() {
         sap.ui.define(["sap/ui/core/format/DateFormat", "sap/ui/model/resource/ResourceModel"], function(e, t) {
             "use strict";
             function r(e) {
@@ -18128,12 +17862,11 @@ sap.ui.require.preload({
             }
         });
     },
-    "delmex/zmmbascula/view/App.view.xml": '<mvc:View controllerName="delmex.zmmbascula.controller.App"\n    displayBlock="true"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"><App id="app"></App></mvc:View>',
-    "delmex/zmmbascula/view/Detail.view.xml": '<mvc:View\n    controllerName="delmex.zmmbascula.controller.Detail"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"\n    xmlns:tnt="sap.tnt"\n    xmlns:table="sap.ui.table"\n    xmlns:l="sap.ui.layout"\n    xmlns:f="sap.ui.layout.form"\n    xmlns:core="sap.ui.core"\n><tnt:ToolHeader><Button\n            text="{i18n>detailview.regresar}"\n            press="goBackBtn"\n        /><ToolbarSpacer /><Title\n            titleStyle="H4"\n            text="{i18n>title}"\n            class="sapUiSmallMargin"\n            id="titleText"\n        /><ToolbarSpacer /></tnt:ToolHeader><VBox class="sapUiSmallMargin"><f:Form\n            id="FormDisplay480_Trial"\n            editable="false"\n        ><f:title><core:Title\n                    text="{i18n>detailView.form_title} {basculaDetails>/Folio}"\n                /></f:title><f:layout><f:ResponsiveGridLayout\n                    labelSpanXL="4"\n                    labelSpanL="4"\n                    labelSpanM="4"\n                    labelSpanS="12"\n                    adjustLabelSpan="false"\n                    emptySpanXL="0"\n                    emptySpanL="0"\n                    emptySpanM="0"\n                    emptySpanS="0"\n                    columnsXL="3"\n                    columnsL="2"\n                    columnsM="2"\n                    singleContainerFullSize="false"\n                /></f:layout><f:formContainers><f:FormContainer title=""><f:formElements><f:FormElement label="{i18n>detailView.tipo_ticket}"><f:fields><Text\n                                    text="{\n                                    parts: [\'basculaDetails>/Tipoticket\'],\n                                    formatter: \'.formatter.getTipoTicketDescripcion\'\n                                }"\n                                    id="txt_Tipoticket"\n                                /></f:fields></f:FormElement><f:FormElement\n                            label="{i18n>detailView.bascula_entrada}"\n                        ><f:fields><Text\n                                    text="{basculaDetails>/BasculaEnt}"\n                                    id="txt_BasculaEnt"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.centro_entrada}"><f:fields><Text\n                                    text="{basculaDetails>/CentroEnt}"\n                                    id="txt_CentroEnt"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.bascula_salida}"><f:fields><Text\n                                    text="{basculaDetails>/BasculaSal}"\n                                    id="txt_BasculaSal"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.centro_salida}"><f:fields><Text\n                                    text="{basculaDetails>/CentroSal}"\n                                    id="txt_CentroSal"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.material}"><f:fields><Text\n                                    text="{basculaDetails>/Material}"\n                                    id="txt_Material"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_reg_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaRegBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaRegBas"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.placa}"><f:fields><Text\n                                    text="{basculaDetails>/Placa}"\n                                    id="txt_Placa"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.conductor}"><f:fields><Text\n                                    text="{basculaDetails>/Conductor}"\n                                    id="txt_Conductor"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_ent_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaEntBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaEntBas"\n                                /></f:fields></f:FormElement></f:formElements></f:FormContainer><f:FormContainer title=""><f:formElements><f:FormElement label="{i18n>detailView.pesaje}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Pesaje\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Pesaje"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_sal_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaSalBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaSalBas"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.pesaje2}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Pesaje2\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Pesaje2"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.peso_neto}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/PesoNeto\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_PesoNeto"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.peso_teorico}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/PesoTeorico\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_PesoTeorico"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.diferencia}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Diferencia\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Diferencia"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.valor}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Valor\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Valor"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.reg_incompleto}"><f:fields><Text\n                                    text="{basculaDetails>/RegIncompleto}"\n                                    id="txt_RegIncompleto"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.numero_doc}"><f:fields><Input\n                                    value="{\n                                        path: \'basculaDetails>/NumeroDoc\',\n                                        formatter: \'.formatter.removeSpaces\'\n                                    }"\n                                    editable="{= ${basculaDetails>/RegIncompleto} !== \'X\' }"\n                                    id="txt_NumeroDoc"\n                                    width="50%"\n                                    placeholder="{i18n>detailView.numero_doc.placeholder}"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.mensaje}"><f:fields><Text\n                                    text="{basculaDetails>/Mensaje}"\n                                    id="txt_Mensaje"\n                                /></f:fields></f:FormElement></f:formElements></f:FormContainer></f:formContainers></f:Form></VBox><HBox\n        class="sapUiSmallMarginTop sapUiMediumMarginBeginEnd"\n        justifyContent="End"\n        alignItems="Center"\n    ><Button\n            text="{i18n>detailView.generar_pdf}"\n            press="onShowPDF"\n        /><Button\n            text="{i18n>detailView.actualizar_datos}"\n            press="onUpdateData"\n            class="sapUiSmallMarginBegin"\n        /></HBox></mvc:View>\n',
-    "delmex/zmmbascula/view/Main.view.xml": '<mvc:View\n    controllerName="delmex.zmmbascula.controller.Main"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"\n    xmlns:tnt="sap.tnt"\n    xmlns:f="sap.f"\n    xmlns:fb="sap.ui.comp.filterbar"\n    xmlns:core="sap.ui.core"\n    xmlns:svm="sap.ui.comp.smartvariants"\n><f:DynamicPage headerExpanded="{/headerExpanded}"><f:header><f:DynamicPageHeader><f:content><fb:FilterBar\n                        id="filterbar"\n                        persistencyKey="myPersKey"\n                        useToolbar="false"\n                        search=".onSearch"\n                        filterChange=".onFilterChange"\n                        afterVariantLoad=".onAfterVariantLoad"\n                    ><fb:filterGroupItems><fb:FilterGroupItem\n                                name="Folio"\n                                label="Folio"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputFolio"\n                                        placeholder="Buscar Folio"\n                                        value="{requestModel>/Folio}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Centro_ent"\n                                label="Centro Ent"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputCentro_ent"\n                                        placeholder="Buscar Centro Ent"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Ticket"\n                                label="Ticket"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputTipoTicket"\n                                        placeholder="Buscar Ticket"\n                                        value="{requestModel>/tipo_ticket}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Centro_sal"\n                                label="Centro Sal"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputCentro_sal"\n                                        placeholder="Buscar Centro Sal"\n                                        value="{requestModel>/centro_sal}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Material"\n                                label="Material"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputMaterial"\n                                        placeholder="Buscar Material"\n                                        value="{requestModel>/Material}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="NumeroDoc"\n                                label="Numero de Documento"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputNumDoc"\n                                        placeholder="Numero de Documento"\n                                        value="{requestModel>/NumeroDoc}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Placa"\n                                label="Placa"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputPlaca"\n                                        placeholder="Buscar Placa"\n                                        value="{requestModel>/Placa}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="FechaEntrada"\n                                label="Fecha entrada báscula"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><DatePicker\n                                        id="DTPFechaEntradaBas"\n                                        value="{\n                                            \'path\': \'requestModel>/FechaEntBas\',\n                                            \'type\': \'sap.ui.model.type.Date\',\n                                            \'formatOptions\': {\n                                                \'pattern\': \'d/M/yyyy\'\n                                            }\n                                        }"\n                                        secondaryCalendarType="Gregorian"\n                                        change="handleChange"\n                                        class="sapUiSmallMarginBottom"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="FechaSalida"\n                                label="Fecha salida báscula"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><DatePicker\n                                        id="DTP_FechaSalidaBas"\n                                        value="{\n                                            \'path\':\'requestModel>/FechaSalBas\',\n                                            \'type\':\'sap.ui.model.type.Date\',\n                                            \'formatOptions\': {\n                                                \'pattern\': \'yyyy-MM-dd\'\n                                            }\n                                        }"\n                                        change="handleChange"\n\t\t\t\t\t                    class="sapUiSmallMarginBottom"\n                                    /></fb:control></fb:FilterGroupItem></fb:filterGroupItems></fb:FilterBar></f:content></f:DynamicPageHeader></f:header><f:content><Table\n                id="productsTable"\n                items="{detailsModel>/}"\n                headerText="Resultado"\n                growing="true"\n                growingScrollToLoad="true"\n                width="100%"\n            ><columns><Column><Text text="Folio" /></Column><Column><Text text="Tipo ticket" /></Column><Column><Text text="Centro Ent" /></Column><Column><Text text="Centro Sal" /></Column><Column><Text text="Material" /></Column><Column><Text text="Proceso" /></Column><Column><Text text="Numero Documento" /></Column><Column><Text text="Placa" /></Column><Column><Text text="Fecha Ent Bascula" /></Column><Column><Text text="Fecha Sal Báscula" /></Column></columns><items><ColumnListItem\n                        type="Active"\n                        vAlign="Middle"\n                        press="navToDetail"\n                    ><cells><Text text="{detailsModel>Folio}" /><Text\n                                text="{\n                    parts: [\'detailsModel>Tipoticket\'],\n                    formatter: \'.formatter.getTipoTicketDescripcion\'\n                }"\n                            /><Text text="{detailsModel>CentroEnt}" /><Text text="{detailsModel>CentroSal}" /><Text\n                                text="{\n                    parts: [\'detailsModel>Material\'],\n                    formatter: \'.formatter.emptyValue\'\n                }"\n                            /><Text\n                                text="{\n                    parts: [\'detailsModel>Proceso\'],\n                    formatter: \'.formatter.getProcesoDescripcion\'\n                }"\n                            /><Text text="{detailsModel>NumeroDoc}" /><Text text="{detailsModel>Placa}" /><Text\n                                text="{\n                    parts: [\'detailsModel>FechaEntBas\'],\n                    formatter: \'.formatter.formatDate\'\n                }"\n                            /><Text\n                                text="{\n                    parts: [\'detailsModel>FechaEntBas\'],\n                    formatter: \'.formatter.formatDate\'\n                }"\n                            /></cells></ColumnListItem></items></Table></f:content></f:DynamicPage></mvc:View>\n'
+    "bascula/view/App.view.xml": '<mvc:View controllerName="bascula.controller.App"\n    displayBlock="true"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"><App id="app"></App></mvc:View>',
+    "bascula/view/Detail.view.xml": '<mvc:View\n    controllerName="bascula.controller.Detail"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"\n    xmlns:tnt="sap.tnt"\n    xmlns:table="sap.ui.table"\n    xmlns:l="sap.ui.layout"\n    xmlns:f="sap.ui.layout.form"\n    xmlns:core="sap.ui.core"\n><tnt:ToolHeader><Button\n            text="{i18n>detailview.regresar}"\n            press="goBackBtn"\n        /><ToolbarSpacer /><Title\n            titleStyle="H4"\n            text="{i18n>title}"\n            class="sapUiSmallMargin"\n            id="titleText"\n        /><ToolbarSpacer /></tnt:ToolHeader><VBox class="sapUiSmallMargin"><f:Form\n            id="FormDisplay480_Trial"\n            editable="false"\n        ><f:title><core:Title\n                    text="{i18n>detailView.form_title} {basculaDetails>/Folio}"\n                /></f:title><f:layout><f:ResponsiveGridLayout\n                    labelSpanXL="4"\n                    labelSpanL="4"\n                    labelSpanM="4"\n                    labelSpanS="12"\n                    adjustLabelSpan="false"\n                    emptySpanXL="0"\n                    emptySpanL="0"\n                    emptySpanM="0"\n                    emptySpanS="0"\n                    columnsXL="3"\n                    columnsL="2"\n                    columnsM="2"\n                    singleContainerFullSize="false"\n                /></f:layout><f:formContainers><f:FormContainer title=""><f:formElements><f:FormElement label="{i18n>detailView.tipo_ticket}"><f:fields><Text\n                                    text="{\n                                    parts: [\'basculaDetails>/Tipoticket\'],\n                                    formatter: \'.formatter.getTipoTicketDescripcion\'\n                                }"\n                                    id="txt_Tipoticket"\n                                /></f:fields></f:FormElement><f:FormElement\n                            label="{i18n>detailView.bascula_entrada}"\n                        ><f:fields><Text\n                                    text="{basculaDetails>/BasculaEnt}"\n                                    id="txt_BasculaEnt"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.centro_entrada}"><f:fields><Text\n                                    text="{basculaDetails>/CentroEnt}"\n                                    id="txt_CentroEnt"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.bascula_salida}"><f:fields><Text\n                                    text="{basculaDetails>/BasculaSal}"\n                                    id="txt_BasculaSal"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.centro_salida}"><f:fields><Text\n                                    text="{basculaDetails>/CentroSal}"\n                                    id="txt_CentroSal"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.material}"><f:fields><Text\n                                    text="{basculaDetails>/Material}"\n                                    id="txt_Material"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_reg_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaRegBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaRegBas"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.placa}"><f:fields><Text\n                                    text="{basculaDetails>/Placa}"\n                                    id="txt_Placa"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.conductor}"><f:fields><Text\n                                    text="{basculaDetails>/Conductor}"\n                                    id="txt_Conductor"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_ent_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaEntBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaEntBas"\n                                /></f:fields></f:FormElement></f:formElements></f:FormContainer><f:FormContainer title=""><f:formElements><f:FormElement label="{i18n>detailView.pesaje}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Pesaje\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Pesaje"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.fecha_sal_bas}"><f:fields><Text\n                                    text="{ path: \'basculaDetails>/FechaSalBas\', formatter: \'.formatter.formatDate\' }"\n                                    id="txt_FechaSalBas"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.pesaje2}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Pesaje2\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Pesaje2"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.peso_neto}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/PesoNeto\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_PesoNeto"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.peso_teorico}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/PesoTeorico\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_PesoTeorico"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.diferencia}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Diferencia\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Diferencia"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.valor}"><f:fields><Text\n                                    text="{path: \'basculaDetails>/Valor\', formatter: \'.formatter.formatNumberWithCommas\'}"\n                                    id="txt_Valor"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.reg_incompleto}"><f:fields><Text\n                                    text="{basculaDetails>/RegIncompleto}"\n                                    id="txt_RegIncompleto"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.numero_doc}"><f:fields><Input\n                                    value="{\n                                        path: \'basculaDetails>/NumeroDoc\',\n                                        formatter: \'.formatter.removeSpaces\'\n                                    }"\n                                    editable="{= ${basculaDetails>/RegIncompleto} !== \'X\' }"\n                                    id="txt_NumeroDoc"\n                                    width="50%"\n                                    placeholder="{i18n>detailView.numero_doc.placeholder}"\n                                /></f:fields></f:FormElement><f:FormElement label="{i18n>detailView.mensaje}"><f:fields><Text\n                                    text="{basculaDetails>/Mensaje}"\n                                    id="txt_Mensaje"\n                                /></f:fields></f:FormElement></f:formElements></f:FormContainer></f:formContainers></f:Form></VBox><HBox\n        class="sapUiSmallMarginTop sapUiMediumMarginBeginEnd"\n        justifyContent="End"\n        alignItems="Center"\n    ><Button\n            text="{i18n>detailView.generar_pdf}"\n            press="onShowPDF"\n        /><Button\n            text="{i18n>detailView.actualizar_datos}"\n            press="onUpdateData"\n            class="sapUiSmallMarginBegin"\n        /></HBox></mvc:View>\n',
+    "bascula/view/Main.view.xml": '<mvc:View\n    controllerName="bascula.controller.Main"\n    xmlns:mvc="sap.ui.core.mvc"\n    xmlns="sap.m"\n    xmlns:tnt="sap.tnt"\n    xmlns:f="sap.f"\n    xmlns:fb="sap.ui.comp.filterbar"\n    xmlns:core="sap.ui.core"\n    xmlns:svm="sap.ui.comp.smartvariants"\n><f:DynamicPage headerExpanded="{/headerExpanded}"><f:header><f:DynamicPageHeader><f:content><fb:FilterBar\n                        id="filterbar"\n                        persistencyKey="myPersKey"\n                        useToolbar="false"\n                        search=".onSearch"\n                        filterChange=".onFilterChange"\n                        afterVariantLoad=".onAfterVariantLoad"\n                    ><fb:filterGroupItems><fb:FilterGroupItem\n                                name="Folio"\n                                label="Folio"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputFolio"\n                                        placeholder="Buscar Folio"\n                                        value="{requestModel>/Folio}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Centro_ent"\n                                label="Centro Ent"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputCentro_ent"\n                                        placeholder="Buscar Centro Ent"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Ticket"\n                                label="Ticket"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputTipoTicket"\n                                        placeholder="Buscar Ticket"\n                                        value="{requestModel>/tipo_ticket}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Centro_sal"\n                                label="Centro Sal"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputCentro_sal"\n                                        placeholder="Buscar Centro Sal"\n                                        value="{requestModel>/centro_sal}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Material"\n                                label="Material"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputMaterial"\n                                        placeholder="Buscar Material"\n                                        value="{requestModel>/Material}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="NumeroDoc"\n                                label="Numero de Documento"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputNumDoc"\n                                        placeholder="Numero de Documento"\n                                        value="{requestModel>/NumeroDoc}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="Placa"\n                                label="Placa"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><Input\n                                        name="inputPlaca"\n                                        placeholder="Buscar Placa"\n                                        value="{requestModel>/Placa}"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="FechaEntrada"\n                                label="Fecha entrada báscula"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><DatePicker\n                                        id="DTPFechaEntradaBas"\n                                        value="{\n                                            \'path\': \'requestModel>/FechaEntBas\',\n                                            \'type\': \'sap.ui.model.type.Date\',\n                                            \'formatOptions\': {\n                                                \'pattern\': \'d/M/yyyy\'\n                                            }\n                                        }"\n                                        secondaryCalendarType="Gregorian"\n                                        change="handleChange"\n                                        class="sapUiSmallMarginBottom"\n                                    /></fb:control></fb:FilterGroupItem><fb:FilterGroupItem\n                                name="FechaSalida"\n                                label="Fecha salida báscula"\n                                groupName="Group1"\n                                visibleInFilterBar="true"\n                            ><fb:control><DatePicker\n                                        id="DTP_FechaSalidaBas"\n                                        value="{\n                                            \'path\':\'requestModel>/FechaSalBas\',\n                                            \'type\':\'sap.ui.model.type.Date\',\n                                            \'formatOptions\': {\n                                                \'pattern\': \'yyyy-MM-dd\'\n                                            }\n                                        }"\n                                        change="handleChange"\n\t\t\t\t\t                    class="sapUiSmallMarginBottom"\n                                    /></fb:control></fb:FilterGroupItem></fb:filterGroupItems></fb:FilterBar></f:content></f:DynamicPageHeader></f:header><f:content><Table\n                id="productsTable"\n                items="{detailsModel>/}"\n                headerText="Resultado"\n                growing="true"\n                growingScrollToLoad="true"\n                width="100%"\n            ><columns><Column><Text text="Folio" /></Column><Column><Text text="Tipo ticket" /></Column><Column><Text text="Centro Ent" /></Column><Column><Text text="Centro Sal" /></Column><Column><Text text="Material" /></Column><Column><Text text="Proceso" /></Column><Column><Text text="Numero Documento" /></Column><Column><Text text="Placa" /></Column><Column><Text text="Fecha Ent Bascula" /></Column><Column><Text text="Fecha Sal Báscula" /></Column></columns><items><ColumnListItem\n                        type="Active"\n                        vAlign="Middle"\n                        press="navToDetail"\n                    ><cells><Text text="{detailsModel>Folio}" /><Text\n                                text="{\n                    parts: [\'detailsModel>Tipoticket\'],\n                    formatter: \'.formatter.getTipoTicketDescripcion\'\n                }"\n                            /><Text text="{detailsModel>CentroEnt}" /><Text text="{detailsModel>CentroSal}" /><Text\n                                text="{\n                    parts: [\'detailsModel>Material\'],\n                    formatter: \'.formatter.emptyValue\'\n                }"\n                            /><Text\n                                text="{\n                    parts: [\'detailsModel>Proceso\'],\n                    formatter: \'.formatter.getProcesoDescripcion\'\n                }"\n                            /><Text text="{detailsModel>NumeroDoc}" /><Text text="{detailsModel>Placa}" /><Text\n                                text="{\n                    parts: [\'detailsModel>FechaEntBas\'],\n                    formatter: \'.formatter.formatDate\'\n                }"\n                            /><Text\n                                text="{\n                    parts: [\'detailsModel>FechaEntBas\'],\n                    formatter: \'.formatter.formatDate\'\n                }"\n                            /></cells></ColumnListItem></items></Table></f:content></f:DynamicPage></mvc:View>\n'
 });
-//# sourceMappingURL=Component-preload.js.map
-//# base controlle----------
+
 
 
 sap.ui.define([
@@ -18143,7 +17876,7 @@ sap.ui.define([
 ], (Controller, JSONModel, MessageBox) => {
     "use strict";
 
-    return Controller.extend("delmex.zmmbascula.controller.BaseController", {
+    return Controller.extend("bascula.controller.BaseController", {
 
         onInit() {
 
@@ -18291,20 +18024,12 @@ sap.ui.define([
             const sModulePath = sap.ui.require.toUrl("delmex/zmmbascula");
             const sBase = sModulePath.split("/webapp")[0];
 
-            // Devuelve algo como: /resources/ -> para BAS
-            // o: /e4a25f08-xxxxxx.delmexbasculazmmbascula... -> en Work Zone
-
+            
             return sBase + "/sap/opu/odata/sap/ZUI_BASCULA_SRV_V2";
         },
 
 
-        /**
-        * Consulta los datos de un folio en el servicio OData y los carga en el modelo "basculaDetails".
-        * Retorna una Promise para poder usar async/await si se desea.
-        * 
-        * @param {string} sFolio - Folio a consultar
-        * @returns {Promise} Resolución con los datos obtenidos, o rechazo con el error
-        */
+       
         loadFolioData: function (sFolio, c_buildPDF = false) {
             const _that = this;
             const oModel = this.getView().getModel("zbasc");
@@ -18535,13 +18260,6 @@ sap.ui.define([
             };
             img.src = src;
         },
-
-
-
-
-
-
-
 
     });
 });

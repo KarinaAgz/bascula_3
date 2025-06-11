@@ -83,16 +83,92 @@ sap.ui.define([
         },
         
         onDownloadPDF: function () {
-            var oModel = this.getView().getModel("zbasc");
-            if (!oModel || !oModel.getData()) {
+            var oView = this.getView();
+            var oForm = oView.byId("detailForm");
+            var oContext = oForm.getBindingContext("zbasc");
+        
+            if (!oContext) {
                 MessageToast.show("No hay datos para descargar.");
                 return;
             }
-
-            window.print();
-            MessageToast.show("Selecciona 'Guardar como PDF' en la ventana de impresión.");
+        
+            var oData = oContext.getObject();
+            const { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+        
+            // Título principal con fondo
+            doc.setFillColor(144, 238, 144); // Verde claro
+            doc.rect(0, 0, 210, 30, 'F'); // Fondo del título (tamaño A4 completo en ancho)
+            doc.setFontSize(24);
+            doc.setTextColor(255, 255, 255); // Blanco
+            doc.text("báscula", 105, 20, { align: "center" });
+        
+            // Línea divisoria elegante
+            doc.setDrawColor(0, 128, 0); // Verde oscuro
+            doc.line(20, 35, 190, 35);
+        
+            // Sección: Información General
+            doc.setFillColor(240, 240, 240); // Gris claro
+            doc.rect(20, 40, 170, 73, 'F'); // Fondo de la sección
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont("helvetica", "bold");
+            doc.text("Información General", 25, 50);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(12);
+            doc.text("Tipo ticket: " + this.defaultText(oData.Tipoticket), 25, 60);
+            doc.text("Centro entrada: " + this.defaultText(oData.CentroEnt), 25, 70);
+            doc.text("Centro salida: " + this.defaultText(oData.CentroSal), 25, 80);
+            doc.text("Material: " + this.defaultText(oData.Material), 25, 90);
+            doc.text("Conductor: " + this.defaultText(oData.Conductor), 25, 100);
+            doc.text("Placa: " + this.defaultText(oData.Placa), 25, 110);
+        
+            // Sección: Datos de Pesaje
+            doc.setFillColor(240, 240, 240);
+            doc.rect(20, 120, 170, 73, 'F');
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Datos de Pesaje", 25, 130);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(12);
+            doc.text("Báscula Entrada: " + this.defaultText(oData.BasculaEnt), 25, 140);
+            doc.text("Báscula Salida: " + this.defaultText(oData.BasculaSal), 25, 150);
+            doc.text("Pesaje 1 en kg: " + this.defaultText(oData.Pesaje), 25, 160);
+            doc.text("Pesaje 2 en kg: " + this.defaultText(oData.Pesaje2), 25, 170);
+            doc.text("Peso Neto: " + this.defaultText(oData.PesoNeto), 25, 180);
+            doc.text("Peso Teórico: " + this.defaultText(oData.PesoTeorico), 25, 190);
+        
+            // Sección: Fechas y Proceso
+            doc.setFillColor(240, 240, 240);
+            doc.rect(20, 200, 170, 50, 'F');
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Fechas y Proceso", 25, 210);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(12);
+            doc.text("Fecha Entrada Báscula: " + this.formatDateTime(oData.FechaEntBas), 25, 220);
+            doc.text("Fecha Salida Báscula: " + this.formatDateTime(oData.FechaSalBas), 25, 230);
+            doc.text("Proceso: " + this.defaultText(oData.Proceso), 25, 240);
+        
+            // Sección: Resultados
+            doc.setFillColor(240, 240, 240);
+            doc.rect(20, 260, 170, 30, 'F');
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Resultados", 25, 270);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(12);
+            doc.text("Número Documento: " + this.defaultText(oData.NumeroDoc), 25, 280);
+        
+            // Líneas divisorias entre secciones
+            doc.setDrawColor(0, 128, 0);
+            doc.line(20, 120, 190, 120);
+            doc.line(20, 200, 190, 200);
+            doc.line(20, 260, 190, 260);
+        
+            // Guardar el PDF
+            doc.save("Detalles_Folio_" + this.defaultText(oData.Folio) + ".pdf");
         },
-
         _fetchCsrfToken: function (sUrl) {
             return new Promise((resolve, reject) => {
                 $.ajax({
