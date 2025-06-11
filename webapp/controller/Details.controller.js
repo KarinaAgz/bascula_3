@@ -96,20 +96,20 @@ sap.ui.define([
             const { jsPDF } = window.jspdf;
             var doc = new jsPDF();
         
-            // Título principal con fondo
-            doc.setFillColor(144, 238, 144); // Verde claro
-            doc.rect(0, 0, 210, 30, 'F'); // Fondo del título (tamaño A4 completo en ancho)
+            // Título 
+            doc.setFillColor(144, 238, 144); 
+            doc.rect(0, 0, 210, 30, 'F'); // Fondo del título
             doc.setFontSize(24);
-            doc.setTextColor(255, 255, 255); // Blanco
+            doc.setTextColor(255, 255, 255); 
             doc.text("báscula", 105, 20, { align: "center" });
         
-            // Línea divisoria elegante
+            // Línea divisoria 
             doc.setDrawColor(0, 128, 0); // Verde oscuro
             doc.line(20, 35, 190, 35);
         
             // Sección: Información General
-            doc.setFillColor(240, 240, 240); // Gris claro
-            doc.rect(20, 40, 170, 73, 'F'); // Fondo de la sección
+            doc.setFillColor(240, 240, 240); 
+            doc.rect(20, 40, 170, 73, 'F'); 
             doc.setFontSize(14);
             doc.setTextColor(0, 0, 0);
             doc.setFont("helvetica", "bold");
