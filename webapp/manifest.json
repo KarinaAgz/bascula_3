@@ -111,11 +111,13 @@
       "targets": {
         "TargetMain": {
           "id": "Main",
-          "name": "Main"
+          "name": "Main",
+          "viewName":"Main"
         },
         "TargetDetails": {
           "id": "Details",
-          "name": "Details"
+          "name": "Details",
+          "viewName":"Details"
         }
       }
     },

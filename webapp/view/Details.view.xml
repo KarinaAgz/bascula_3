@@ -149,6 +149,7 @@
                         type="Emphasized"
                     />
                 </HBox>
+                <PDFViewer id="_pdfViewer" width="100%" height="600px" visible="false"/>  <!--genra una vista del pdf -->
             </VBox>
         </content>
     </Page>
