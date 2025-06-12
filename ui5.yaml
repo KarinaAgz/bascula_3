@@ -5,11 +5,11 @@ metadata:
   name: delmex.bascula3
 type: application
 
-# Configuración de recursos para incluir la carpeta img
+# Configuración de recursos
 resources:
   configuration:
     paths:
-      - webapp/img
+      webapp: "webapp"
 
 # Configuración del builder para copiar recursos
 builder:
@@ -21,13 +21,13 @@ builder:
           - webapp/img
         dest: resources
 
-# Configuración del servidor (existente)
+# Configuración del servidor
 server:
   customMiddleware:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertError: true
         ui5:
           path:
             - /resources

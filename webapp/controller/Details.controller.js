@@ -91,7 +91,7 @@ sap.ui.define([
                         No_Doc: "NO. DE DOCUMENTO "
                     },
                     Helpers: {
-                        Line: "___________________________"
+                        Line: "_______________________"
                     }
                 }
             };
@@ -99,35 +99,39 @@ sap.ui.define([
 
         onDownloadPDF: function () {
             var oView = this.getView();
-            var oForm = oView.byId("detailForm");
+            var oForm = oView.byId("detailForm"); //obtiene el formulario "detailsForm"
             var oContext = oForm.getBindingContext("zbasc");
         
             if (!oContext) {
                 MessageToast.show("No hay datos para descargar.");
                 return;
             }
-        
+        //Verifica si jsPDF esta disponible
             if (typeof window.jspdf === "undefined") {
                 MessageToast.show("La librería jsPDF no se ha cargado correctamente.");
                 console.error("jsPDF no está disponible en window.jspdf");
                 return;
             }
-        
+            //Obtiene la estructura del pdf desde el modelo
             var oData = oContext.getObject();
             var doc = new window.jspdf.jsPDF();
+            //obtiene la estructura del pdf desde un modelo llamado pdfDtructureModel
             var o = this.getView().getModel("pdfStructureModel").getData().Structure;
-            const a = doc.internal.pageSize.getWidth();
-            const n = 90;
-            const i = 30;
-            const s = (a - n) / 2;
-            const c = 10;
-            var l = 10;
-            var d = 12;
+
+            const a = doc.internal.pageSize.getWidth(); //Ancho de la página
+            const n = 90; //Ancho de la imagen en puntos
+            const i = 30; //alto de la imagen en pts.
+            const s = (a - n) / 2; //centra la posiscion X para centrar la imagen H 
+            const c = 10; //Margen
+            var l = 10; //Tamaño de fuente inicial encabezado
+            var d = 12; //tamaño de fuente para detalles
         
             // Configura el tamaño de fuente y texto del header
-            doc.setFontSize(l);
-            const u = doc.getTextWidth(o.Header.Line1);
-            const g = (a - u) / 2;
+            doc.setFontSize(l);//tamaño de fuente inicial
+
+            //calcula las posiciones x para centrar cada linea del encabezado 
+            const u = doc.getTextWidth(o.Header.Line1);   //ancho del texto de la linea1
+            const g = (a - u) / 2;                         //calcula la posicion x para centrar la linea1
             const L = doc.getTextWidth(o.Header.Line2);
             const x = (a - L) / 2;
             const m = doc.getTextWidth(o.Header.Line3);
@@ -140,19 +144,24 @@ sap.ui.define([
             const H = (a - f) / 2;
             const M = doc.getTextWidth(o.Header.Line7);
             const S = (a - M) / 2;
+
+            //concat text del cuerpo para el folio
             var A = o.Body.Folio + this.defaultText(oData.Folio);
         
-            // Carga la imagen desde la nueva ruta
-            const C = sap.ui.require.toUrl("img/LOGO2.png"); // Ruta relativa desde controller
-            this.loadImageAsBase64(C, function (l) {
-                if (l) { // Solo añade la imagen si se cargó correctamente
-                    doc.addImage(l, "PNG", s, 20, n, i);
+            // Carga la imagen como recurso estático (ruta absoluta desde webapp)
+            const imageUrl = window.location.origin + "/img/LOGO.png";
+            this.loadImageAsBase64(imageUrl, function (l) { // función callback para cargar la imagen como Base64
+                if (l) {
+                    doc.addImage(l, "PNG", s, 20, n, i);/// añade la imagen si se carga (X, Y, ancho, alto)
                 } else {
                     console.warn("No se pudo cargar la imagen LOGO2.png, se omitirá en el PDF.");
                 }
-                doc.setTextColor(7, 31, 99);
-                doc.setFont("helvetica", "bolditalic");
-                doc.text(o.Header.Line1, g, 70);
+
+                //config color de text RGB
+                doc.setTextColor(7, 31, 99); 
+                doc.setFont("helvetica", "bolditalic");//estilo de fuente encabezado
+                //añade las lineas del encabezdo en posisicones centradas 
+                doc.text(o.Header.Line1, g, 70); // linea1 en y=70
                 doc.text(o.Header.Line2, x, 75);
                 doc.text(o.Header.Line3, _, 80);
                 doc.text(o.Header.Line4, E, 85);
@@ -160,11 +169,12 @@ sap.ui.define([
                 doc.text(o.Header.Line6, H, 95);
                 doc.text(o.Header.Line7, S, 100);
                 doc.setFontSize(d);
+                //añade el folio alineado a la derecha
                 doc.text(A, a - (c + 40), 115, { align: "right" });
         
                 // Resto del cuerpo del PDF
-                const uPos = 20;
-                var L = o.Body.Placa;
+                const uPos = 20;  //posicion X inicial para las etiq
+                var L = o.Body.Placa; // Etiqueta Placa del modelo 
                 var m = o.Body.Bruto;
                 var p = o.Body.Bound;
                 var h = o.Body.Fecha_Hora_SALIDA_1;
@@ -175,10 +185,11 @@ sap.ui.define([
                 var rPesaje2 = this.defaultText(oData.Pesaje2);
                 var rPesoNeto = this.defaultText(oData.PesoNeto);
         
-                doc.setFont("helvetica", "italic");
-                doc.text(L, uPos, 140);
-                doc.text(this.defaultText(oData.Placa), uPos + 30, 140);
-                doc.text(o.Helpers.Line, uPos + 30, 141);
+                doc.setFont("helvetica", "italic"); //tamaño de fuente detalles
+                //datos del cuerpo del pdf
+                doc.text(L, uPos, 140);  //placa en x=20, y =140
+                doc.text(this.defaultText(oData.Placa), uPos + 30, 140); // Valor de Placa en X=50, Y=140
+                doc.text(o.Helpers.Line, uPos + 30, 141);//linea debajo de placa
                 doc.text(m, uPos, 150);
                 doc.text(p, uPos, 155);
                 doc.text(rPesaje, uPos + 30, 155);
@@ -224,15 +235,18 @@ sap.ui.define([
 
         // Convierte una imagen a base64 para usarla en el PDF
         loadImageAsBase64: function (sUrl, fnCallback) {
+            //crea un nuevo obj Image para cargar img
             var oImg = new Image();
-            oImg.crossOrigin = "Anonymous"; // Intentar evitar problemas de CORS
+            //Config crossOrigin  para evitar ploblemas de CORS
+            oImg.crossOrigin = "Anonymous"; 
             oImg.onload = function () {
+                //crea un canvas para dibujar la imagen
                 var oCanvas = document.createElement("canvas");
-                oCanvas.width = oImg.width;
+                oCanvas.width = oImg.width; //ancho del canvas al igual de la img
                 oCanvas.height = oImg.height;
                 var oContext = oCanvas.getContext("2d");
-                oContext.drawImage(oImg, 0, 0);
-                var sBase64 = oCanvas.toDataURL("image/png"); // Formato correcto
+                oContext.drawImage(oImg, 0, 0); //dibuja la img en el canvas (0,0)
+                var sBase64 = oCanvas.toDataURL("image/png"); // convierte la img a base64
                 fnCallback(sBase64);
             };
             oImg.onerror = function () {

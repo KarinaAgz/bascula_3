@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "bascula_3-config1",
+      "name": "bascula_3-config3",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
@@ -22,9 +22,9 @@
       "internalConsoleOptions": "openOnSessionStart",
       "outputCapture": "std",
       "env": {
-        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
         "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/bascula_3\"}",
-        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"path\":\"/sap\",\"url\":\"https://my413406-api.s4hana.cloud.sap\",\"destination\":\"Bascula_v2\"}]"
+        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"path\":\"/sap\",\"url\":\"https://my413406-api.s4hana.cloud.sap\",\"destination\":\"Bascula_v2\"}]",
+        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
       }
     }
   ]
