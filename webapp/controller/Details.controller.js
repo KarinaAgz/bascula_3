@@ -8,58 +8,127 @@ sap.ui.define([
     return Controller.extend("delmex.bascula3.controller.Details", {
         onInit: function () {
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteDetails").attachPatternMatched(this._onObjectMatched, this);
+            oRouter.getRoute("RouteDetails").attachPatternMatched(this._onRouteMatched, this);
+
+            // Cargar ticketModel al iniciar
+            this._loadTicketModel();
 
             // Modelo para la estructura del PDF
             var oPdfStructureModel = new JSONModel(this.get_JSON_PDF());
             this.getView().setModel(oPdfStructureModel, "pdfStructureModel");
         },
 
-        _onObjectMatched: function (oEvent) {
-            var oArguments = oEvent.getParameter("arguments");
-            var sFolio = oArguments.folio;
-            if (!sFolio) {
-                MessageToast.show("Folio no proporcionado.");
-                return;
-            }
-            this._loadDetails(sFolio);
-        },
-
-        _loadDetails: function (sFolio) {
+        _loadTicketModel: function () {
             var oView = this.getView();
-            var oModel = this.getOwnerComponent().getModel("zbasc");
-
-            if (!oModel) {
-                MessageToast.show("El modelo zbasc no está definido.");
-                console.error("Modelo zbasc no encontrado en Component.js");
-                return;
-            }
-
-            oView.setBusy(true);
-            var sPath = "/Folio('" + sFolio + "')";
-            console.log("Solicitando datos con path:", sPath);
-
-            oModel.read(sPath, {
-                success: function (oData) {
-                    console.log("Datos recibidos del servicio:", oData);
-                    var oContext = new sap.ui.model.Context(oModel, sPath);
-                    var oForm = oView.byId("detailForm");
-                    if (oForm) {
-                        oForm.setBindingContext(oContext, "zbasc");
-                        console.log("Contexto establecido en el formulario:", oContext.getPath(), "Datos en contexto:", oContext.getObject());
+            return new Promise((resolve) => {
+                var oTicketModel = oView.getModel("ticketModel");
+                if (!oTicketModel) {
+                    var oModel = this.getOwnerComponent().getModel("zbasc");
+                    if (oModel) {
+                        oModel.read("/CTTicket", {
+                            success: function (oData) {
+                                var oTicketData = {};
+                                oData.results.forEach(function (oEntry) {
+                                    oTicketData[oEntry.TipoTicket] = oEntry.Descripcion;
+                                });
+                                oView.setModel(new JSONModel(oTicketData), "ticketModel");
+                                console.log("Datos de CTTicket cargados en Details:", oTicketData);
+                                resolve();
+                            }.bind(this),
+                            error: function (oError) {
+                                MessageToast.show("Error al cargar los tipos de ticket en Details.");
+                                console.error("Error al cargar CTTicket:", oError);
+                                resolve(); // Resolver para continuar
+                            }
+                        });
                     } else {
-                        console.error("No se encontró el formulario con ID 'detailForm'");
+                        resolve(); // Resolver si no hay modelo
                     }
-                    oView.setBusy(false);
-                    console.log("Detalles cargados para el Folio: " + sFolio);
-                }.bind(this),
-                error: function (oError) {
-                    oView.setBusy(false);
-                    var sErrorMessage = oError.message || "Error desconocido";
-                    MessageToast.show("Error al cargar los datos: " + sErrorMessage);
-                    console.error("Error al cargar datos:", oError);
+                } else {
+                    resolve();
                 }
             });
+        },
+
+        _onRouteMatched: async function (oEvent) {
+            var oArgs = oEvent.getParameter("arguments");
+            var sFolio = oArgs.folio;
+            var oView = this.getView();
+            oView.setBusy(true);
+            console.log("Intentando bindear Folio:", sFolio);
+
+            try {
+                // Esperar a que ticketModel esté listo
+                await this._loadTicketModel();
+
+                oView.bindElement({
+                    path: "zbasc>/Folio('" + sFolio + "')",
+                    events: {
+                        dataReceived: function () {
+                            oView.setBusy(false);
+                            var oContext = oView.getBindingContext("zbasc");
+                            console.log("Contexto vinculado:", oContext ? oContext.getObject() : "No contexto");
+                            if (oContext) {
+                                console.log("Datos del contexto (incluye Tipoticket):", oContext.getObject());
+                                var oForm = oView.byId("detailForm");
+                                if (oForm) {
+                                    oForm.setBindingContext(oContext, "zbasc");
+                                }
+                                // Forzar la actualización del control específico
+                                var oTicketText = oView.byId("ticketTypeText"); // Ajusta el ID según Details.view.xml
+                                if (oTicketText) {
+                                    oTicketText.invalidate(); // Fuerza la reevaluación
+                                    console.log("Control ticketTypeText invalidado");
+                                }
+                            } else {
+                                MessageToast.show("No se encontraron datos para el Folio: " + sFolio);
+                            }
+                        },
+                        dataRequested: function () {
+                            console.log("Solicitando datos para Folio:", sFolio);
+                        },
+                        change: function (oEvent) {
+                            console.log("Cambio en el binding:", oEvent.getParameter("reason"));
+                        }
+                    }
+                });
+            } catch (error) {
+                oView.setBusy(false);
+                console.error("Error al cargar ticketModel:", error);
+                MessageToast.show("Error al preparar la vista. Intenta de nuevo.");
+            }
+        },
+
+        defaultText: function (sText) {
+            return sText === undefined || sText === null || sText === "" ? "No disponible" : sText.trim();
+        },
+
+        formatTicketDescription: function (sTicketCode) {
+            var oTicketModel = this.getView().getModel("ticketModel");
+            if (!oTicketModel || !sTicketCode) {
+                console.log("Modelo ticket no disponible o código vacío:", sTicketCode);
+                return "No disponible";
+            }
+            var oData = oTicketModel.getData();
+            var sDescription = oData[sTicketCode] || "No disponible";
+            console.log("Código Ticket:", sTicketCode, "Descripción:", sDescription);
+            return sDescription;
+        },
+
+        formatDateTime: function (sDateTime) {
+            if (!sDateTime || sDateTime === "No disponible") return "No disponible";
+            try {
+                var sDatePart = sDateTime.substring(0, 8);
+                var oDate = new Date(
+                    sDatePart.substring(0, 4),
+                    sDatePart.substring(4, 6) - 1,
+                    sDatePart.substring(6, 8)
+                );
+                return oDate.toLocaleDateString("es-MX", { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch (e) {
+                console.error("Error al formatear fecha:", sDateTime, e);
+                return sDateTime;
+            }
         },
 
         // Define la estructura JSON para el diseño del PDF
@@ -101,12 +170,12 @@ sap.ui.define([
             var oView = this.getView();
             var oForm = oView.byId("detailForm"); //obtiene el formulario "detailsForm"
             var oContext = oForm.getBindingContext("zbasc");
-        
+
             if (!oContext) {
                 MessageToast.show("No hay datos para descargar.");
                 return;
             }
-        //Verifica si jsPDF esta disponible
+            //Verifica si jsPDF esta disponible
             if (typeof window.jspdf === "undefined") {
                 MessageToast.show("La librería jsPDF no se ha cargado correctamente.");
                 console.error("jsPDF no está disponible en window.jspdf");
@@ -125,7 +194,7 @@ sap.ui.define([
             const c = 10; //Margen
             var l = 10; //Tamaño de fuente inicial encabezado
             var d = 12; //tamaño de fuente para detalles
-        
+
             // Configura el tamaño de fuente y texto del header
             doc.setFontSize(l);//tamaño de fuente inicial
 
@@ -147,7 +216,7 @@ sap.ui.define([
 
             //concat text del cuerpo para el folio
             var A = o.Body.Folio + this.defaultText(oData.Folio);
-        
+
             // Carga la imagen como recurso estático (ruta absoluta desde webapp)
             const imageUrl = window.location.origin + "/img/LOGO.png";
             this.loadImageAsBase64(imageUrl, function (l) { // función callback para cargar la imagen como Base64
@@ -158,7 +227,7 @@ sap.ui.define([
                 }
 
                 //config color de text RGB
-                doc.setTextColor(7, 31, 99); 
+                doc.setTextColor(7, 31, 99);
                 doc.setFont("helvetica", "bolditalic");//estilo de fuente encabezado
                 //añade las lineas del encabezdo en posisicones centradas 
                 doc.text(o.Header.Line1, g, 70); // linea1 en y=70
@@ -171,7 +240,7 @@ sap.ui.define([
                 doc.setFontSize(d);
                 //añade el folio alineado a la derecha
                 doc.text(A, a - (c + 40), 115, { align: "right" });
-        
+
                 // Resto del cuerpo del PDF
                 const uPos = 20;  //posicion X inicial para las etiq
                 var L = o.Body.Placa; // Etiqueta Placa del modelo 
@@ -184,7 +253,7 @@ sap.ui.define([
                 var rPesaje = this.defaultText(oData.Pesaje);
                 var rPesaje2 = this.defaultText(oData.Pesaje2);
                 var rPesoNeto = this.defaultText(oData.PesoNeto);
-        
+
                 doc.setFont("helvetica", "italic"); //tamaño de fuente detalles
                 //datos del cuerpo del pdf
                 doc.text(L, uPos, 140);  //placa en x=20, y =140
@@ -227,7 +296,7 @@ sap.ui.define([
                 doc.text(B, uPos, 280);
                 doc.text(this.defaultText(oData.NumeroDoc), uPos + 50, 280);
                 doc.text(o.Helpers.Line, uPos + 50, 281);
-        
+
                 // Guardar el PDF
                 doc.save("Detalles_Folio_" + this.defaultText(oData.Folio) + ".pdf");
             }.bind(this));
@@ -238,7 +307,7 @@ sap.ui.define([
             //crea un nuevo obj Image para cargar img
             var oImg = new Image();
             //Config crossOrigin  para evitar ploblemas de CORS
-            oImg.crossOrigin = "Anonymous"; 
+            oImg.crossOrigin = "Anonymous";
             oImg.onload = function () {
                 //crea un canvas para dibujar la imagen
                 var oCanvas = document.createElement("canvas");
@@ -258,50 +327,6 @@ sap.ui.define([
 
         goBackBtn: function () {
             this.getOwnerComponent().getRouter().navTo("RouteMain");
-        },
-
-        defaultText: function (sValue) {
-            return sValue === undefined || sValue === null || sValue === "" ? "No disponible" : sValue.trim();
-        },
-
-        formatDateTime: function (sDateTime) {
-            if (!sDateTime || sDateTime === "No disponible") return "No disponible";
-            try {
-                var sDatePart = sDateTime.substring(0, 8);
-                var oDate = new Date(
-                    sDatePart.substring(0, 4),
-                    sDatePart.substring(4, 6) - 1,
-                    sDatePart.substring(6, 8)
-                );
-                return oDate.toLocaleDateString("es-MX", { day: '2-digit', month: '2-digit', year: 'numeric' });
-            } catch (e) {
-                console.error("Error al formatear fecha:", sDateTime, e);
-                return sDateTime;
-            }
-        },
-        
-        _fetchCsrfToken: function (sUrl) {
-            return new Promise((resolve, reject) => {
-                $.ajax({
-                    url: sUrl,
-                    method: "GET",
-                    headers: {
-                        "X-CSRF-Token": "Fetch",
-                        "Accept": "application/json"
-                    },
-                    success: function (_data, _status, xhr) {
-                        let sToken = xhr.getResponseHeader("X-CSRF-Token");
-                        if (sToken) {
-                            resolve(sToken);
-                        } else {
-                            reject("No se recibió el token CSRF.");
-                        }
-                    },
-                    error: function (oError) {
-                        reject("Error al obtener el token CSRF: " + oError.statusText);
-                    }
-                });
-            });
         },
 
         onUpdateNumeroDoc: async function () {
@@ -326,10 +351,10 @@ sap.ui.define([
 
             try {
                 const sServiceUrl = oModel.sServiceUrl;
-                const sPath = `/Alta('${sFolio}')`; // Usamos /Alta 
+                const sPath = `/Alta('${sFolio}')`;
                 const sFullUrl = sServiceUrl + sPath;
 
-                const sToken = await this._fetchCsrfToken(sServiceUrl + "/Folio('0')"); // Obtener token
+                const sToken = await this._fetchCsrfToken(sServiceUrl + "/Folio('0')");
                 console.log("Token CSRF obtenido:", sToken);
 
                 await $.ajax({
@@ -345,8 +370,8 @@ sap.ui.define([
                     }),
                     success: () => {
                         MessageToast.show("Número de documento actualizado correctamente.");
-                        oModel.refresh(true); // Refresca el modelo para reflejar los cambios
-                        oContext.setProperty("NumeroDoc", sNewNumeroDoc); // Actualiza el contexto
+                        oModel.refresh(); // Solo refresh del modelo si es necesario
+                        oContext.setProperty("NumeroDoc", sNewNumeroDoc);
                     },
                     error: (oError) => {
                         let sErrorMessage = oError.responseJSON?.error?.message?.value || "Error desconocido";
@@ -361,6 +386,30 @@ sap.ui.define([
             }
 
             oView.setBusy(false);
+        },
+
+        _fetchCsrfToken: function (sUrl) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: sUrl,
+                    method: "GET",
+                    headers: {
+                        "X-CSRF-Token": "Fetch",
+                        "Accept": "application/json"
+                    },
+                    success: function (_data, _status, xhr) {
+                        let sToken = xhr.getResponseHeader("X-CSRF-Token");
+                        if (sToken) {
+                            resolve(sToken);
+                        } else {
+                            reject("No se recibió el token CSRF.");
+                        }
+                    },
+                    error: function (oError) {
+                        reject("Error al obtener el token CSRF: " + oError.statusText);
+                    }
+                });
+            });
         }
     });
 });

@@ -26,6 +26,8 @@ sap.ui.define([
                     });
                     oView.setModel(new JSONModel(oTicketData), "ticketModel");
                     console.log("Datos de CTTicket cargados:", oTicketData);
+                    // Forzar actualización de la vista después de cargar ticketModel
+                    oView.rerender();
                 }.bind(this),
                 error: function (oError) {
                     oView.setBusy(false);
@@ -50,8 +52,17 @@ sap.ui.define([
 
         formatTicketDescription: function (sTicketCode) {
             var oTicketModel = this.getView().getModel("ticketModel");
-            if (!oTicketModel || !sTicketCode) return "No disponible";
-            var sDescription = oTicketModel.getProperty("/" + sTicketCode) || "No disponible";
+            if (!oTicketModel || !sTicketCode) {
+                // Retrasar la evaluación si el modelo no está listo
+                if (!oTicketModel) {
+                    setTimeout(() => this.getView().rerender(), 100); // Reintentar después de 100ms
+                }
+                console.log("Modelo ticket no disponible o código vacío:", sTicketCode);
+                return "No disponible";
+            }
+            var oData = oTicketModel.getData();
+            var sDescription = oData[sTicketCode] || "No disponible";
+            console.log("Código Ticket:", sTicketCode, "Descripción:", sDescription);
             return sDescription;
         },
 
@@ -81,9 +92,7 @@ sap.ui.define([
         },
 
         onFilterLiveChange: function (oEvent) {
-            // Filtrar inmediatamente al escribir
             this._applyFilters();
-            // Disparar manualmente el evento de búsqueda del FilterBar para asegurar la actualización
             var oFilterBar = this.byId("filterBar");
             oFilterBar.fireSearch();
         },
@@ -108,9 +117,8 @@ sap.ui.define([
                         console.log("Filtrando", sName, "con valor:", sValueUpper);
 
                         if (sName === "Ticket") {
-                            // Mapear la descripción ("Interno" o "Externo") a los códigos numéricos ("1" o "2")
                             var sTicketCode = Object.keys(oTicketModel.getData()).find(function (key) {
-                                return oTicketModel.getProperty("/" + key).toUpperCase() === sValueUpper;
+                                return oTicketModel.getData()[key].toUpperCase() === sValueUpper;
                             });
                             if (sTicketCode) {
                                 aFilters.push(new Filter({
@@ -172,9 +180,9 @@ sap.ui.define([
             var sYear = sDateTime.substring(0, 4);
             var sMonth = sDateTime.substring(4, 6);
             var sDay = sDateTime.substring(6, 8);
-            var sHour = sDateTime.substring(9, 11);
-            var sMinute = sDateTime.substring(11, 13);
-            var sSecond = sDateTime.substring(13, 15);
+            var sHour = sDateTime.substring(9, 11) || "00"; // Hora, "00" si no hay
+            var sMinute = sDateTime.substring(11, 13) || "00"; // Minutos, "00" si no hay
+            var sSecond = sDateTime.substring(13, 15) || "00"; // Segundos, "00" si no hay
 
             var oDate = new Date(sYear, sMonth - 1, sDay, sHour, sMinute, sSecond);
 

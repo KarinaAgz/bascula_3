@@ -38,9 +38,10 @@
                             class="elegantSectionTitle"
                         />
                         <Label text="{i18n>tipoTicket}" />
-                        <Text
-                            text="{ path: 'zbasc>Tipoticket', formatter: '.defaultText' }"
-                        />
+                        
+                           <Text text="{ path: 'zbasc>Tipoticket', formatter: '.formatTicketDescription' }" />
+                            
+                        
                         <Label text="{i18n>centroEntrada}" />
                         <Text
                             text="{ path: 'zbasc>CentroEnt', formatter: '.defaultText' }"
